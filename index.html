@@ -1,0 +1,113 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VMS • Dashboard</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="container">
+    <h1 class="h1">Dashboard</h1>
+
+    <!-- KPI CARDS -->
+    <section class="kpis">
+      <div class="card kpi">
+        <div class="label"># of live cases (not cumulative)</div>
+        <div class="value">12</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">F-1 cases</div>
+        <div class="value">5 <span class="help">OPT: 2 • STEM OPT: 1</span></div>
+      </div>
+      <div class="card kpi">
+        <div class="label">J-1 cases</div>
+        <div class="value">2</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">H-1B / PR</div>
+        <div class="value">3 / 2</div>
+      </div>
+    </section>
+
+    <!-- UPCOMING CASES -->
+    <section class="card section">
+      <div class="titlebar">
+        <div>
+          <div class="title"># of upcoming cases in the next 3 months</div>
+          <div class="help">2 case(s)</div>
+        </div>
+        <input id="search" class="input" placeholder="Search name / visa / subtype" />
+      </div>
+      <div class="card pad">
+        <table id="upcoming" class="table">
+          <thead>
+            <tr>
+              <th>NAME</th>
+              <th>VISA</th>
+              <th>END DATE</th>
+              <th>DUE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Name 1</td>
+              <td><span class="chip">F-1</span>&nbsp;OPT</td>
+              <td>9/30/2025</td>
+              <td class="due-neg">4d</td>
+            </tr>
+            <tr>
+              <td>Name 9</td>
+              <td><span class="chip">F-1</span>&nbsp;OPT</td>
+              <td>12/4/2025</td>
+              <td class="due-pos">69d</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- NEW CASES -->
+    <section class="card section">
+      <div class="titlebar">
+        <div class="title">New cases</div>
+        <div class="help">&nbsp;</div>
+      </div>
+      <div class="card pad">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>NAME</th>
+              <th>VISA</th>
+              <th>START DATE</th>
+              <th>IN SYSTEM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Name 10</td>
+              <td><span class="chip">J-1</span>&nbsp;Intern</td>
+              <td>5/31/2024</td>
+              <td>483d</td>
+            </tr>
+            <tr>
+              <td>Name 5</td>
+              <td><span class="chip">PR</span>&nbsp;EB-2</td>
+              <td>7/11/2024</td>
+              <td>442d</td>
+            </tr>
+            <tr>
+              <td>Name 3</td>
+              <td><span class="chip">H-1B</span>&nbsp;CAP</td>
+              <td>9/30/2024</td>
+              <td>361d</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
