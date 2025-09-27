@@ -26,7 +26,8 @@ How does it work?
 ------------------------------------
 Development Notes
 ------------------------------------
-This section will track technical changes, design choices, and debugging notes as the project grows.  
+This section will track technical changes, design choices, and debugging notes as the project grows. 
+The initial HTML, CSS, and JavaScript setup was created with the help of ChatGPT to quickly scaffold a working structure for our team to build on.
 
 ------------------------------------
 Change Log
