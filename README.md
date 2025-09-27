@@ -32,4 +32,4 @@ This section will track technical changes, design choices, and debugging notes a
 Change Log
 ------------------------------------
 - 9/20: Repository created and README initialized  
-- (Add future changes here)  
+- 9/26: Initialized and committed the basic dashboard shell (static HTML, CSS, JS).
