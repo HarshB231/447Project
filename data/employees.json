@@ -212,7 +212,8 @@
           "result": "Philosophy"
         }
       }
-    ]
+    ],
+    "flagged": false
   },
   {
     "id": 3,
@@ -671,7 +672,8 @@
         "employee educational  level": null,
         "employee educational field": null
       }
-    ]
+    ],
+    "flagged": false
   },
   {
     "id": 8,
@@ -3064,7 +3066,8 @@
         "employee educational  level": "Ph.D.",
         "employee educational field": "Atmosphec Science"
       }
-    ]
+    ],
+    "flagged": false
   },
   {
     "id": 36,
@@ -3430,7 +3433,7 @@
         "employee educational field": null
       }
     ],
-    "flagged": true,
+    "flagged": false,
     "notes": []
   },
   {
