@@ -1,6 +1,12 @@
 :root{
-  --bg: #f8fafc;          /* page background */
-  --card: #ffffff;        /* card background */
+  /* Palette from user */
+  --brown: #CAAD7E; /* header/footer */
+  --pale: #ECEBC9;
+  --bg: #F6F6DB;    /* page background (user requested) */
+  --green-1: #D5E7B8;
+  --green-2: #C4DEA4;
+  --green-3: #A7D489;
+  --card: #ffffff;        /* default card background */
   --ink: #0f172a;         /* headings/text */
   --muted:#64748b;        /* secondary text */
   --line:#e2e8f0;         /* borders */
@@ -58,6 +64,37 @@ body {
   font-size: 28px;
   font-weight: 700;
 }
+
+/* KPI card color variations */
+.kpis .kpi:nth-child(1) {
+  background: var(--green-1);
+  border-color: rgba(0,0,0,0.04);
+}
+.kpis .kpi:nth-child(2) {
+  background: var(--green-2);
+  border-color: rgba(0,0,0,0.04);
+}
+.kpis .kpi:nth-child(3) {
+  background: var(--green-3);
+  border-color: rgba(0,0,0,0.04);
+}
+.kpis .kpi:nth-child(4) {
+  background: linear-gradient(180deg,var(--green-2),var(--green-1));
+  border-color: rgba(0,0,0,0.04);
+}
+.kpis .kpi .label,
+.kpis .kpi .value { color: var(--ink); }
+
+/* Header / Footer */
+.site-header, .site-footer {
+  background: var(--brown);
+  color: var(--ink);
+  padding: 14px 24px;
+}
+.site-header .container, .site-footer .container { display:flex; align-items:center; justify-content:space-between; }
+.site-header .brand { font-weight:800; font-size:18px; }
+.site-header nav a { color: var(--ink); margin-left:12px; text-decoration:none; font-weight:600; }
+.site-footer { margin-top:32px; font-size:13px; }
 
 .section {
   margin-top: 16px;
