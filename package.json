@@ -1,0 +1,32 @@
+{
+  "name": "vms-demo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "prisma:gen": "prisma generate",
+    "db:push": "prisma db push",
+    "import:excel": "ts-node scripts/import-excel.ts",
+    "db:reset": "rimraf prisma/dev.db && npm run db:push && npm run import:excel"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "exceljs": "^4.4.0",
+    "next": "^13.5.11",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.16",
+    "@types/react": "19.2.2",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.4.0",
+    "prisma": "^5.22.0",
+    "rimraf": "^3.0.2",
+    "tailwindcss": "^4.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

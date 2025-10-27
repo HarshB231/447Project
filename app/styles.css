@@ -1,4 +1,4 @@
-﻿:root{
+:root{
   --bg: #f8fafc;          /* page background */
   --card: #ffffff;        /* card background */
   --ink: #0f172a;         /* headings/text */
@@ -20,21 +20,18 @@ body {
   color: var(--ink);
 }
 
-/* Page container */
 .container {
   max-width: 1100px;
   margin: 0 auto;
   padding: 24px;
 }
 
-/* Header */
 .h1 {
   font-size: 32px;
   font-weight: 800;
   margin: 8px 0 20px;
 }
 
-/* Cards */
 .card {
   background: var(--card);
   border: 1px solid var(--line);
@@ -43,7 +40,6 @@ body {
 }
 .card.pad { padding: 16px; }
 
-/* KPI row */
 .kpis {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -63,7 +59,6 @@ body {
   font-weight: 700;
 }
 
-/* Section */
 .section {
   margin-top: 16px;
   padding: 12px;
@@ -79,7 +74,6 @@ body {
   color: var(--muted); font-size: 12px;
 }
 
-/* Input */
 .input {
   width: 320px;
   background: #f9fafb;
@@ -91,7 +85,6 @@ body {
 }
 .input::placeholder { color: #9aa3af; }
 
-/* Table */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -106,7 +99,6 @@ body {
 .table th { color: var(--muted); font-weight: 600; }
 .table tr:hover { background: #f9fafb; }
 
-/* Visa chips */
 .chip {
   display: inline-flex; align-items: center; gap: 6px;
   background: var(--chip);
@@ -117,11 +109,9 @@ body {
   color: #3730a3;
 }
 
-/* due badge */
 .due-pos { color: var(--pos); font-weight: 700; }
 .due-neg { color: var(--neg); font-weight: 700; }
 
-/* Responsive */
 @media (max-width: 960px) {
   .kpis { grid-template-columns: repeat(2, 1fr); }
   .input { width: 200px; }
