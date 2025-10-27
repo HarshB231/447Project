@@ -1,8 +1,8 @@
 ﻿import { NextResponse } from "next/server";
-import prisma from "../../../lib/prisma";
+import data from "../../../lib/data";
 
 export async function GET() {
-  const total = await prisma.employee.count();
-  const flagged = await prisma.employee.count({ where: { flagged: true } });
-  return NextResponse.json({ total, flagged });
+  const items = await data.readEmployees();
+  const stats = data.computeStats(items);
+  return NextResponse.json(stats);
 }

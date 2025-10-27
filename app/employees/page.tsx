@@ -17,6 +17,7 @@ export default function Page() {
   const [q, setQ] = useState("");
   const [visaFilter, setVisaFilter] = useState("");
   const [employees, setEmployees] = useState<EmployeeSummary[]>([]);
+  const [processing, setProcessing] = useState<number[]>([]);
 
   async function load() {
     const params = new URLSearchParams();
@@ -25,6 +26,22 @@ export default function Page() {
     const res = await fetch(`/api/employees?${params.toString()}`);
     const data = await res.json();
     setEmployees(data);
+  }
+
+  async function toggleFlag(id: number, current: boolean) {
+    try {
+      setProcessing(p => [...p, id]);
+      await fetch(`/api/employees/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ flagged: !current }),
+      });
+      await load();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setProcessing(p => p.filter(x => x !== id));
+    }
   }
 
   useEffect(() => { load(); }, []);
@@ -61,11 +78,16 @@ export default function Page() {
               {employees.map((e) => (
                 <tr key={e.id}>
                   <td>{[e.firstName, e.lastName].filter(Boolean).join(' ') || e.umbcEmail}</td>
-                  <td>{e.visas && e.visas[0]?.type ? <span className="chip">{e.visas[0].type}</span> : '—'}</td>
+                  <td>{(e as any).currentVisa?.type ? <span className="chip">{(e as any).currentVisa.type}</span> : (e.visas && e.visas[0]?.type ? <span className="chip">{e.visas[0].type}</span> : '—')}</td>
                   <td>{e.department}</td>
                   <td>{e.title}</td>
                   <td>{e.flagged ? <span className="due-neg">Yes</span> : 'No'}</td>
-                  <td><Link href={`/employees/${e.id}`}>View</Link></td>
+                  <td style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                    <button className="input" onClick={() => toggleFlag(e.id, !!e.flagged)} disabled={processing.includes(e.id)}>
+                      {e.flagged ? 'Unflag' : 'Flag'}
+                    </button>
+                    <Link href={`/employees/${e.id}`}>View</Link>
+                  </td>
                 </tr>
               ))}
             </tbody>
