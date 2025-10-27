@@ -1,0 +1,157 @@
+[1mdiff --git a/assets/script.js b/assets/script.js[m
+[1mdeleted file mode 100644[m
+[1mindex 1c57408..0000000[m
+[1m--- a/assets/script.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,13 +0,0 @@[m
+[31m-﻿/* Simple search filter for demo tables */[m
+[31m-function wireSearch() {[m
+[31m-  const input = document.querySelector("#search");[m
+[31m-  const rows = document.querySelectorAll("#upcoming tbody tr");[m
+[31m-  if (!input) return;[m
+[31m-  input.addEventListener("input", () => {[m
+[31m-    const q = input.value.toLowerCase();[m
+[31m-    rows.forEach(tr => {[m
+[31m-      tr.style.display = tr.innerText.toLowerCase().includes(q) ? "" : "none";[m
+[31m-    });[m
+[31m-  });[m
+[31m-}[m
+[31m-document.addEventListener("DOMContentLoaded", wireSearch);[m
+[1mdiff --git a/assets/style.css b/assets/style.css[m
+[1mdeleted file mode 100644[m
+[1mindex ffc1630..0000000[m
+[1m--- a/assets/style.css[m
+[1m+++ /dev/null[m
+[36m@@ -1,132 +0,0 @@[m
+[31m-﻿:root{[m
+[31m-  --bg: #f8fafc;          /* page background */[m
+[31m-  --card: #ffffff;        /* card background */[m
+[31m-  --ink: #0f172a;         /* headings/text */[m
+[31m-  --muted:#64748b;        /* secondary text */[m
+[31m-  --line:#e2e8f0;         /* borders */[m
+[31m-  --accent:#111827;       /* dark text for contrast */[m
+[31m-  --chip:#eef2ff;         /* light chip bg */[m
+[31m-  --chip-border:#e0e7ff;  /* light chip border */[m
+[31m-  --pos:#10b981;          /* positive (green) */[m
+[31m-  --neg:#ef4444;          /* negative (red) */[m
+[31m-}[m
+[31m-[m
+[31m-* { box-sizing: border-box; }[m
+[31m-html, body { height: 100%; }[m
+[31m-body {[m
+[31m-  margin: 0;[m
+[31m-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Noto Sans, "Apple Color Emoji","Segoe UI Emoji";[m
+[31m-  background: var(--bg);[m
+[31m-  color: var(--ink);[m
+[31m-}[m
+[31m-[m
+[31m-/* Page container */[m
+[31m-.container {[m
+[31m-  max-width: 1100px;[m
+[31m-  margin: 0 auto;[m
+[31m-  padding: 24px;[m
+[31m-}[m
+[31m-[m
+[31m-/* Header */[m
+[31m-.h1 {[m
+[31m-  font-size: 32px;[m
+[31m-  font-weight: 800;[m
+[31m-  margin: 8px 0 20px;[m
+[31m-}[m
+[31m-[m
+[31m-/* Cards */[m
+[31m-.card {[m
+[31m-  background: var(--card);[m
+[31m-  border: 1px solid var(--line);[m
+[31m-  border-radius: 16px;[m
+[31m-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);[m
+[31m-}[m
+[31m-.card.pad { padding: 16px; }[m
+[31m-[m
+[31m-/* KPI row */[m
+[31m-.kpis {[m
+[31m-  display: grid;[m
+[31m-  grid-template-columns: repeat(4, minmax(0, 1fr));[m
+[31m-  gap: 16px;[m
+[31m-  margin-bottom: 20px;[m
+[31m-}[m
+[31m-.kpi {[m
+[31m-  padding: 16px;[m
+[31m-}[m
+[31m-.kpi .label {[m
+[31m-  color: var(--muted);[m
+[31m-  font-size: 12px;[m
+[31m-  margin-bottom: 8px;[m
+[31m-}[m
+[31m-.kpi .value {[m
+[31m-  font-size: 28px;[m
+[31m-  font-weight: 700;[m
+[31m-}[m
+[31m-[m
+[31m-/* Section */[m
+[31m-.section {[m
+[31m-  margin-top: 16px;[m
+[31m-  padding: 12px;[m
+[31m-}[m
+[31m-.section .titlebar {[m
+[31m-  display: flex; align-items: center; justify-content: space-between;[m
+[31m-  padding: 8px 4px 12px;[m
+[31m-}[m
+[31m-.section .title {[m
+[31m-  font-weight: 700; font-size: 16px;[m
+[31m-}[m
+[31m-.help {[m
+[31m-  color: var(--muted); font-size: 12px;[m
+[31m-}[m
+[31m-[m
+[31m-/* Input */[m
+[31m-.input {[m
+[31m-  width: 320px;[m
+[31m-  background: #f9fafb;[m
+[31m-  border: 1px solid var(--line);[m
+[31m-  border-radius: 10px;[m
+[31m-  padding: 10px 12px;[m
+[31m-  font-size: 14px;[m
+[31m-  outline: none;[m
+[31m-}[m
+[31m-.input::placeholder { color: #9aa3af; }[m
+[31m-[m
+[31m-/* Table */[m
+[31m-.table {[m
+[31m-  width: 100%;[m
+[31m-  border-collapse: collapse;[m
+[31m-  font-size: 14px;[m
+[31m-}[m
+[31m-.table th, .table td {[m
+[31m-  text-align: left;[m
+[31m-  padding: 12px 10px;[m
+[31m-  border-bottom: 1px solid var(--line);[m
+[31m-  white-space: nowrap;[m
+[31m-}[m
+[31m-.table th { color: var(--muted); font-weight: 600; }[m
+[31m-.table tr:hover { background: #f9fafb; }[m
+[31m-[m
+[31m-/* Visa chips */[m
+[31m-.chip {[m
+[31m-  display: inline-flex; align-items: center; gap: 6px;[m
+[31m-  background: var(--chip);[m
+[31m-  border: 1px solid var(--chip-border);[m
+[31m-  border-radius: 999px;[m
+[31m-  padding: 2px 8px;[m
+[31m-  font-size: 12px; font-weight: 600;[m
+[31m-  color: #3730a3;[m
+[31m-}[m
+[31m-[m
+[31m-/* due badge */[m
+[31m-.due-pos { color: var(--pos); font-weight: 700; }[m
+[31m-.due-neg { color: var(--neg); font-weight: 700; }[m
+[31m-[m
+[31m-/* Responsive */[m
+[31m-@media (max-width: 960px) {[m
+[31m-  .kpis { grid-template-columns: repeat(2, 1fr); }[m
+[31m-  .input { width: 200px; }[m
+[31m-}[m
+[31m-@media (max-width: 560px) {[m
+[31m-  .kpis { grid-template-columns: 1fr; }[m
+[31m-  .container { padding: 16px; }[m
+[31m-}[m
