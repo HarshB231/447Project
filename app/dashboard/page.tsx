@@ -1,5 +1,7 @@
 ﻿"use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "../../lib/supabaseClient";
 
 type Stats = { total: number; flagged: number; expiringSoon: number; f1: number; j1: number; h1: number; pr: number };
 type EmployeeSummary = { id: number; firstName?: string; lastName?: string; umbcEmail?: string; department?: string; currentVisa?: { type?: string; startDate?: string | null; endDate?: string | null } };
@@ -7,17 +9,39 @@ type EmployeeSummary = { id: number; firstName?: string; lastName?: string; umbc
 export default function DashboardPage() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [expiring, setExpiring] = useState<EmployeeSummary[]>([]);
+  const router = useRouter();
 
+  // Auth guard: if not logged in, go to login
   useEffect(() => {
-    fetch('/api/stats').then(r => r.json()).then(setStats).catch(console.error);
-    // load some employees for the table (first page)
-    fetch('/api/employees').then(r => r.json()).then((data) => setExpiring(data.slice(0, 50))).catch(console.error);
+    supabase.auth.getSession().then(({ data }) => {
+      if (!data.session) router.replace("/");
+    });
+  }, [router]);
+
+  // Load stats and employees
+  useEffect(() => {
+    fetch("/api/stats").then((r) => r.json()).then(setStats).catch(console.error);
+    fetch("/api/employees").then((r) => r.json()).then((data) => setExpiring(data.slice(0, 50))).catch(console.error);
   }, []);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    router.replace("/");
+  }
 
   return (
     <div className="container">
       <h1 className="h1">Dashboard</h1>
 
+      <div className="segmented-wrap">
+        <div className="segmented">
+          <button className="segmented-item" onClick={handleLogout}>Back to Login</button>
+          <a className="segmented-item active" href="/dashboard">Dashboard</a>
+          <a className="segmented-item" href="/employees">Employees</a>
+        </div>
+      </div>
+
+      {/* KPIs and table */}
       <div className="kpis">
         <div className="card kpi pad large-kpi">
           <div className="label"># of live records</div>
