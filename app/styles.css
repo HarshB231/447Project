@@ -303,6 +303,15 @@ body {
 }
 .btn-soft:active { transform: translateY(0); }
 .btn-soft:disabled { opacity: 0.65; cursor: not-allowed; }
+
+/* Action buttons: compact, uppercase, with gentle “pop” */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
   background: #f9fafb;
   color: var(--ink);
   font-weight: 800;
@@ -313,7 +322,11 @@ body {
               inset 0 0 0 2px rgba(255, 255, 255, 0.4);
   transition: transform 50ms ease, box-shadow 200ms ease, background 200ms ease;
 }
-.btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(15,23,42,0.12), inset 0 0 0 2px rgba(255,255,255,0.4); }
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12),
+              inset 0 0 0 2px rgba(255,255,255,0.4);
+}
 .btn:active { transform: translateY(0); }
 .btn:disabled { opacity: 0.65; cursor: not-allowed; }
 
@@ -326,7 +339,7 @@ body {
               0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Highlighted “Unflag” — green gradient + glow to fit existing palette */
+/* Highlighted “Unflag” — green gradient + glow to fit palette */
 .btn-unflag {
   background: linear-gradient(180deg, var(--green-2), var(--green-3));
   border-color: var(--green-3);
