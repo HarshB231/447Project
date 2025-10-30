@@ -22,6 +22,7 @@ export default function Page() {
   const [visaFilter, setVisaFilter] = useState("");
   const [employees, setEmployees] = useState<EmployeeSummary[]>([]);
   const [processing, setProcessing] = useState<number[]>([]);
+  const [filteredEmployees, setFilteredEmployees] = useState<EmployeeSummary[]>([]);
   const router = useRouter();
 
   // redirect to login if no session
@@ -65,6 +66,26 @@ export default function Page() {
     router.replace("/");
   }
 
+  function computeFiltered(list: EmployeeSummary[], query: string, visa: string) {
+    const norm = (s?: string) => (s || '').toLowerCase();
+    const qn = norm(query);
+    const vn = norm(visa);
+    return list.filter((e) => {
+      const name = norm([e.firstName, e.lastName].filter(Boolean).join(' '));
+      const email = norm(e.umbcEmail);
+      const matchesQ = !qn || name.includes(qn) || email.includes(qn);
+
+      const visaType = norm(((e as any).currentVisa?.type) || (e.visas && e.visas[0]?.type) || '');
+      const matchesVisa = !vn || visaType.includes(vn);
+
+      return matchesQ && matchesVisa;
+    });
+  }
+
+  useEffect(() => {
+    setFilteredEmployees(computeFiltered(employees, q, visaFilter));
+  }, [employees, q, visaFilter]);
+
   return (
     <div className="container">
       <h1 className="h1">Employees & Scholars</h1>
@@ -88,17 +109,23 @@ export default function Page() {
       <div className="card section">
         <div className="titlebar">
           <div className="title">Employees & Scholars</div>
-          <div className="help">{employees.length} shown</div>
+          <div className="help">{filteredEmployees.length} shown</div>
         </div>
+
         <div style={{ overflowX: 'auto' }}>
           <table className="table">
             <thead>
               <tr>
-                <th>Name</th><th>Visa</th><th>Department</th><th>Title</th><th>Flagged</th><th>Actions</th>
+                <th>Name</th>
+                <th>Visa</th>
+                <th>Department</th>
+                <th>Title</th>
+                <th>Flagged</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {employees.map((e) => (
+              {filteredEmployees.map((e) => (
                 <tr key={e.id}>
                   <td>{[e.firstName, e.lastName].filter(Boolean).join(' ') || e.umbcEmail}</td>
                   <td>{(e as any).currentVisa?.type ? <span className="chip">{(e as any).currentVisa.type}</span> : (e.visas && e.visas[0]?.type ? <span className="chip">{e.visas[0].type}</span> : '—')}</td>
