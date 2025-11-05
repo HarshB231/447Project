@@ -29,6 +29,33 @@ export default function DashboardPage() {
     router.replace("/");
   }
 
+  // Helper: map days-until-expiration -> background/text color.
+  // Year-based color mapping:
+  // - expired or same calendar year => red (too close)
+  // - next year => orange (somewhat okay)
+  // - 2 years => yellow (caution)
+  // - 3+ years => green (safe)
+  function expirationColors(days: number | null, exp: Date | null) {
+    if (!exp) return { bg: "transparent", fg: "inherit" };
+    if (days !== null && days < 0) return { bg: "#7f0000", fg: "#fff" }; // expired
+
+    const now = new Date();
+    const yearDiff = exp.getFullYear() - now.getFullYear();
+
+    if (yearDiff <= 0) {
+      // same year (or earlier but not marked expired) -> consider too close
+      return { bg: "#ff4d4f", fg: "#fff" }; // red
+    }
+    if (yearDiff === 1) {
+      return { bg: "#ff8a00", fg: "#fff" }; // orange
+    }
+    if (yearDiff === 2) {
+      return { bg: "#ffd54f", fg: "#000" }; // yellow
+    }
+    // 3 or more years
+    return { bg: "#66bb6a", fg: "#fff" }; // green
+  }
+
   return (
     <div className="container">
       <h1 className="h1">Dashboard</h1>
@@ -81,18 +108,25 @@ export default function DashboardPage() {
                 const name = [e.firstName, e.lastName].filter(Boolean).join(' ') || e.umbcEmail;
                 const visa = e.currentVisa as any;
                 const exp = visa?.endDate ? new Date(visa.endDate) : null;
+
                 let due = '—';
+                let daysLeft: number | null = null;
                 if (exp) {
                   const now = new Date();
-                  const diff = Math.ceil((exp.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-                  due = diff >= 0 ? `${diff}d` : 'Expired';
+                  daysLeft = Math.ceil((exp.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+                  due = daysLeft >= 0 ? `${daysLeft}d` : 'Expired';
                 }
+
+                const colors = expirationColors(daysLeft, exp);
+
                 return (
                   <tr key={e.id}>
                     <td>{name}</td>
                     <td>{visa?.type ? <span className="chip">{visa.type}</span> : '—'}</td>
                     <td>{exp ? exp.toLocaleDateString() : '—'}</td>
-                    <td className={exp && exp < new Date() ? 'due-neg' : ''}>{due}</td>
+                    <td style={{ backgroundColor: colors.bg, color: colors.fg, borderRadius: 6, padding: '6px 8px' }} className={exp && exp < new Date() ? 'due-neg' : ''}>
+                      {due}
+                    </td>
                   </tr>
                 );
               })}
