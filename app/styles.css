@@ -1,20 +1,34 @@
 :root{
-  /* Palette from user */
-  --brown: #CAAD7E; /* header/footer */
-  --pale: #ECEBC9;
-  --bg: #F6F6DB;    /* page background (user requested) */
-  --green-1: #D5E7B8;
-  --green-2: #C4DEA4;
-  --green-3: #A7D489;
-  --card: #ffffff;        /* default card background */
-  --ink: #0f172a;         /* headings/text */
-  --muted:#64748b;        /* secondary text */
-  --line:#e2e8f0;         /* borders */
-  --accent:#111827;       /* dark text for contrast */
-  --chip:#eef2ff;         /* light chip bg */
-  --chip-border:#e0e7ff;  /* light chip border */
-  --pos:#10b981;          /* positive (green) */
-  --neg:#ef4444;          /* negative (red) */
+  /* UMBC Core Palette */
+  --umbc-black:#000000;
+  --umbc-gold:#FFC904;
+  --gray-50:#F9FAFB;
+  --gray-100:#F5F5F5;
+  --gray-200:#E5E5E5;
+  --gray-300:#CFCFCF;
+  --gray-400:#9CA3AF;
+
+  /* Legacy variable names mapped to UMBC scheme */
+  --brown: var(--umbc-black); /* header/sidebar background */
+  --pale: rgba(255,201,4,0.18); /* subtle gold tint */
+  --bg: var(--gray-100);       /* page background */
+  /* Restored original green gradient palette */
+  --green-1:#D5E7B8;
+  --green-2:#C4DEA4;
+  --green-3:#A7D489;
+  /* Red gradient palette for critical deadlines */
+  --red-1:#FCA5A5;
+  --red-2:#F87171;
+  --red-3:#EF4444;
+  --card: #ffffff;
+  --ink: #0f172a;
+  --muted:#64748b;
+  --line:#e2e8f0;
+  --accent:#111827;
+  --chip: var(--gray-50);
+  --chip-border: var(--gray-200);
+  --pos:#078c49;
+  --neg:#d72121;
 }
 
 * { box-sizing: border-box; }
@@ -213,6 +227,24 @@ body {
 .due-pos { color: var(--pos); font-weight: 700; }
 .due-neg { color: var(--neg); font-weight: 700; }
 
+/* Deadline gradient chips */
+.deadline-soon {
+  background: linear-gradient(90deg,var(--green-3),var(--green-2));
+  color: var(--accent);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.deadline-critical {
+  background: linear-gradient(90deg,var(--red-2),var(--red-3));
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
 @media (max-width: 960px) {
   .kpis { grid-template-columns: repeat(2, 1fr); }
   .input { width: 200px; }
@@ -353,17 +385,17 @@ body {
 }
 
 .layout { display: flex; min-height: 100vh; background: var(--bg); }
-.sidebar { width: 240px; background: var(--brown); color: var(--ink); padding: 12px; border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+.sidebar { width: 240px; background: var(--brown); color: #ffffff; padding: 12px; border-right: 1px solid var(--line); display: flex; flex-direction: column; }
 .layout-collapsed .sidebar { width: 64px; }
 .sidebar-top { display: flex; align-items: center; justify-content: space-between; }
-.sidebar-toggle { width: 32px; height: 32px; border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 8px; cursor: pointer; }
+.sidebar-toggle { width: 32px; height: 32px; border: 1px solid var(--gray-300); background: var(--umbc-gold); color: var(--umbc-black); border-radius: 8px; cursor: pointer; font-weight: 700; }
 .sidebar-nav { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .sidebar-bottom { margin-top: auto; padding-top: 8px; }
-.sidebar-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid transparent; background: transparent; color: var(--ink); text-decoration: none; font-weight: 600; }
-.sidebar-item:hover { background: rgba(255,255,255,0.35); }
-.sidebar-item.active { background: #fff; border-color: var(--line); }
-.sidebar-item .icon { width: 24px; text-align: center; color: #6b7280; }
-.sidebar-item.active .icon { color: var(--ink); }
+.sidebar-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid transparent; background: transparent; color: #f3f4f6; text-decoration: none; font-weight: 600; transition: background 140ms ease, color 140ms ease; }
+.sidebar-item:hover { background: rgba(255,201,4,0.15); }
+.sidebar-item.active { background: var(--umbc-gold); color: var(--umbc-black); font-weight: 700; }
+.sidebar-item .icon { width: 24px; text-align: center; color: #d1d5db; }
+.sidebar-item.active .icon { color: var(--umbc-black); }
 .layout-collapsed .sidebar-item .text { display: none; }
 .layout-collapsed .brand { display: none; }
 .sidebar button.sidebar-item { border: none; }
