@@ -10,6 +10,8 @@ export default function EmployeeDetail() {
   const id = Number(idStr);
   const [employee, setEmployee] = useState<any>(null);
   const [newNote, setNewNote] = useState('');
+  const [activeRowIndex, setActiveRowIndex] = useState(0);
+  const [expandedCell, setExpandedCell] = useState<{ key: string; value: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -57,12 +59,20 @@ export default function EmployeeDetail() {
   }
 
   async function handleLogout() {
-    await supabase.auth.signOut();
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
     router.replace("/");
   }
 
   if (loading) return <div className="container">Loading...</div>;
   if (!employee) return <div className="container">Employee not found</div>;
+
+  // Build unified headers for raw rows Excel-like grid
+  const headers: string[] = employee ? Array.from(new Set([].concat(...(employee.rawRows || []).map((r: any) => Object.keys(r))))) : [];
+  const activeRow = (employee.rawRows || [])[activeRowIndex] || {};
+  function showVal(v: any) { return (v === null || v === undefined || v === '' ? '—' : String(v)); }
+  function isLong(v: any) { const s = showVal(v); return s.length > 80 || s.includes('\n'); }
   return (
     <div className="container">
       <h1 className="h1">Employee Details</h1>
@@ -84,55 +94,58 @@ export default function EmployeeDetail() {
           </div>
 
           <div style={{ padding: 24 }}>
-            <div className="title" style={{ marginBottom: 10 }}>Visa & Employment History</div>
-            <div className="detail-middle card" style={{ marginTop: 0 }}>
-              <table className="table" style={{ width: '100%' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:16, marginBottom:16 }}>
+              <div className="title" style={{ margin:0 }}>Raw Row Viewer</div>
+              <select
+                value={activeRowIndex}
+                onChange={(e)=> setActiveRowIndex(Number(e.target.value))}
+                className="input"
+                style={{ width:200 }}
+              >
+                {(employee.rawRows || []).map((r:any, idx:number) => {
+                  const start = r['start date'] || r['initial h-1b start'] || r['expiration date'] || '';
+                  const visa = r['case type'] || r['visa'] || '';
+                  return <option key={idx} value={idx}>Row {idx+1} {start? '• '+ String(start).toString().slice(0,10): ''} {visa? '• '+ visa: ''}</option>;
+                })}
+              </select>
+            </div>
+            <div className="card" style={{ padding:12, overflowX:'auto' }}>
+              <table className="table" style={{ minWidth: headers.length * 160 }}>
                 <thead>
-                  <tr><th>Start Date</th><th>End Date</th><th>Visa</th><th>Position</th><th>Notes</th></tr>
+                  <tr>
+                    {headers.map(h => <th key={h} style={{ whiteSpace:'normal' }}>{h}</th>)}
+                  </tr>
                 </thead>
                 <tbody>
-                  {employee.visas && employee.visas.length > 0 ? (
-                    employee.visas.map((v: any) => (
-                      <tr key={v.id}>
-                        <td>{v.startDate ? new Date(v.startDate).toLocaleDateString() : '—'}</td>
-                        <td>{v.endDate ? new Date(v.endDate).toLocaleDateString() : 'Present'}</td>
-                        <td>{String(v.type ?? '—')}</td>
-                        <td>{String(v.position ?? '—')}</td>
-                        <td style={{ maxWidth: 300, overflow: 'hidden', textOverflow: 'ellipsis' }}>{v.raw ? Object.values(v.raw).map((x:any)=> (x===null||x===undefined||x=== '')? '—' : String(x)).join(' | ') : '—'}</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr><td colSpan={5}>No visas</td></tr>
-                  )}
+                  <tr>
+                    {headers.map(h => {
+                      const val = activeRow[h];
+                      const display = showVal(val);
+                      const truncated = isLong(val) ? display.slice(0,60) + '…' : display;
+                      return (
+                        <td
+                          key={h}
+                          style={{ cursor: isLong(val)? 'pointer':'default', maxWidth:160 }}
+                          onClick={()=> { if (isLong(val)) setExpandedCell({ key: h, value: display }); }}
+                          title={display}
+                        >
+                          {truncated}
+                        </td>
+                      );
+                    })}
+                  </tr>
                 </tbody>
               </table>
             </div>
-
-            {/* Raw imported rows below history */}
-            <div style={{ marginTop: 28 }}>
-              <div className="title" style={{ marginBottom: 10 }}>All imported columns (raw rows)</div>
-              <div className="detail-raw card" style={{ marginTop: 0 }}>
-                <div className="list-wrap">
-                  {(() => {
-                    const headers = Array.from(new Set([].concat(...(employee.rawRows || []).map((r: any) => Object.keys(r)))));
-                    const showVal = (v: any) => (v === null || v === undefined || v === '' ? '—' : String(v));
-                    return (employee.rawRows || []).map((r: any, idx: number) => (
-                      <div className="kv-card" key={idx}>
-                        <div className="help">Row {idx + 1}</div>
-                        <div className="kv-grid">
-                          {headers.map((h: any) => (
-                            <React.Fragment key={h}>
-                              <div className="kv-key">{h}</div>
-                              <div className="kv-val">{showVal(r[h])}</div>
-                            </React.Fragment>
-                          ))}
-                        </div>
-                      </div>
-                    ));
-                  })()}
+            {expandedCell && (
+              <div style={{ position:'fixed', top:'50%', left:'50%', transform:'translate(-50%,-50%)', background:'var(--card)', border:'1px solid var(--line)', borderRadius:12, padding:24, maxWidth:'60vw', maxHeight:'60vh', overflow:'auto', zIndex:1000, boxShadow:'0 12px 32px rgba(0,0,0,0.35)' }}>
+                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:12 }}>
+                  <div style={{ fontWeight:700, fontSize:18 }}>{expandedCell.key}</div>
+                  <button className="btn-soft" style={{ minWidth:80 }} onClick={()=> setExpandedCell(null)}>Close</button>
                 </div>
+                <div style={{ whiteSpace:'pre-wrap', lineHeight:1.4, fontSize:14 }}>{expandedCell.value}</div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
