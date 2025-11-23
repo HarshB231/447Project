@@ -19,7 +19,7 @@ type EmployeeSummary = {
 export default function Page() {
   // hooks must be inside the component
   const [q, setQ] = useState("");
-  const [visaFilter, setVisaFilter] = useState("");
+  const [searchType, setSearchType] = useState<'name'|'visa'|'department'>('name');
   const [employees, setEmployees] = useState<EmployeeSummary[]>([]);
   const [processing, setProcessing] = useState<number[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<EmployeeSummary[]>([]);
@@ -33,10 +33,8 @@ export default function Page() {
   }, [router]);
 
   async function load() {
-    const params = new URLSearchParams();
-    if (q) params.set("q", q);
-    if (visaFilter) params.set("visa", visaFilter);
-    const res = await fetch(`/api/employees?${params.toString()}`);
+    // Backend still returns all; filtering client-side by searchType
+    const res = await fetch(`/api/employees`);
     const data = await res.json();
     setEmployees(data);
   }
@@ -62,54 +60,68 @@ export default function Page() {
   }, []);
 
   async function handleLogout() {
-    await supabase.auth.signOut();
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
     router.replace("/");
   }
 
-  function computeFiltered(list: EmployeeSummary[], query: string, visa: string) {
+  function computeFiltered(list: EmployeeSummary[], query: string, mode: 'name'|'visa'|'department') {
     const norm = (s?: string) => (s || '').toLowerCase();
     const qn = norm(query);
-    const vn = norm(visa);
     return list.filter((e) => {
-      const name = norm([e.firstName, e.lastName].filter(Boolean).join(' '));
-      const email = norm(e.umbcEmail);
-      const matchesQ = !qn || name.includes(qn) || email.includes(qn);
-
-      const visaType = norm(((e as any).currentVisa?.type) || (e.visas && e.visas[0]?.type) || '');
-      const matchesVisa = !vn || visaType.includes(vn);
-
-      return matchesQ && matchesVisa;
+      if (!qn) return true;
+      if (mode === 'name') {
+        const name = norm([e.firstName, e.lastName].filter(Boolean).join(' '));
+        const email = norm(e.umbcEmail);
+        return name.includes(qn) || email.includes(qn);
+      }
+      if (mode === 'visa') {
+        const visaType = norm(((e as any).currentVisa?.type) || (e.visas && e.visas[0]?.type) || '');
+        return visaType.includes(qn);
+      }
+      if (mode === 'department') {
+        return norm(e.department).includes(qn);
+      }
+      return true;
     });
   }
 
   useEffect(() => {
-    setFilteredEmployees(computeFiltered(employees, q, visaFilter));
-  }, [employees, q, visaFilter]);
+    setFilteredEmployees(computeFiltered(employees, q, searchType));
+  }, [employees, q, searchType]);
 
   return (
-    <div className="container">
+    <div className="container container-wide">
       <h1 className="h1">Employees & Scholars</h1>
-      {/* Segmented navigation */}
-      <div className="segmented-wrap">
-        <div className="segmented">
-          <button className="segmented-item" onClick={handleLogout}>Back to Login</button>
-          <a className="segmented-item" href="/dashboard">Dashboard</a>
-          <a className="segmented-item active" href="/employees">Employees</a>
-        </div>
-      </div>
 
       {/* Search row: make Search a soft, popping button */}
-      <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
-        <input className="input" placeholder="Search name..." value={q} onChange={(e) => setQ(e.target.value)} />
-        <input className="input" placeholder="Visa type" value={visaFilter} onChange={(e) => setVisaFilter(e.target.value)} />
-        <button className="btn-soft" onClick={load}>Search</button>
+      <div style={{ display: "flex", gap: 16, marginBottom: 16 }}>
+        <select
+          value={searchType}
+          onChange={(e)=> setSearchType(e.target.value as any)}
+          className="input big-search-input"
+          style={{ width: 180 }}
+        >
+          <option value="name">Name</option>
+          <option value="visa">Visa</option>
+          <option value="department">Department</option>
+        </select>
+        <input
+          className="input big-search-input"
+          placeholder={`Search ${searchType}...`}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          style={{ flex: 1 }}
+        />
+        <button className="btn-soft big-search-btn" onClick={load}>Refresh</button>
       </div>
 
       {/* Table section */}
       <div className="card section">
         <div className="titlebar">
           <div className="title">Employees & Scholars</div>
-          <div className="help">{filteredEmployees.length} shown</div>
+          <div className="help highlight-counter">{filteredEmployees.length} shown</div>
         </div>
 
         <div style={{ overflowX: 'auto' }}>

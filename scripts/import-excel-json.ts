@@ -78,14 +78,28 @@ async function main() {
   const out: any[] = [];
   let id = 1;
   for (const [k, bucket] of groups.entries()) {
-    // The stakeholder indicated: the lowest (last) row for an individual is the most recent.
-    // So pick the last row in the bucket as the current record.
+    // Last row represents most recent state; earlier rows hold historical context.
     const best = bucket[bucket.length - 1];
 
     const firstName = (best && (best['first name'] || best['first']) ) || '';
     const lastName = (best && (best['last name'] || best['last']) ) || '';
     const umbcEmail = (best && (best['employee\'s umbc email'] || best['employee umbc email'] || best['email'])) || '';
-    const department = (best && (best['department'] || best['academic dept.'] || best['college'])) || '';
+    // Carry forward (downward) department & title: capture last seen non-empty while iterating
+    const deptKeys = ['department','academic dept.','college','dept','department name'];
+    const titleKeys = ['employee title','title','position','job title'];
+    let lastDept: any = '';
+    let lastTitle: any = '';
+    for (const row of bucket) {
+      for (const dk of deptKeys) {
+        const v = row[dk];
+        if (v !== null && v !== undefined && String(v).trim() !== '') lastDept = v;
+      }
+      for (const tk of titleKeys) {
+        const v = row[tk];
+        if (v !== null && v !== undefined && String(v).trim() !== '') lastTitle = v;
+      }
+    }
+    const department = lastDept;
     // Helper: find the last non-empty value in the bucket for a set of potential column keys
     function pickLast(bucketRows: any[], keys: string[]) {
       for (let i = bucketRows.length - 1; i >= 0; i--) {
@@ -132,7 +146,7 @@ async function main() {
       currentVisa.type = 'Permanent Resident';
     }
 
-    const titleVal = pickLast(bucket, ['title', 'position', 'job title']);
+    const titleVal = lastTitle || pickLast(bucket, titleKeys);
 
     out.push({
       id: id++,
