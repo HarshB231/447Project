@@ -11,12 +11,18 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [sessionChecked, setSessionChecked] = useState(false);
+  const [hasSession, setHasSession] = useState(false);
 
   useEffect(() => {
+    let active = true;
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) router.replace("/dashboard");
+      if (!active) return;
+      setHasSession(!!data.session);
+      setSessionChecked(true);
     });
-  }, [router]);
+    return () => { active = false; };
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -25,14 +31,14 @@ export default function Page() {
     setLoading(true);
     try {
       if (mode === "signin") {
-        const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+        const { error: signInError } = await (supabase?.auth.signInWithPassword({ email, password }) || { error: new Error('Auth client unavailable') });
         if (signInError) throw signInError;
-        router.replace("/dashboard");
+        setHasSession(true);
       } else {
-        const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
+        const { data, error: signUpError } = await (supabase?.auth.signUp({ email, password }) || { data: {}, error: new Error('Auth client unavailable') });
         if (signUpError) throw signUpError;
         if (data.session) {
-          router.replace("/dashboard");
+          setHasSession(true);
         } else {
           setNotice("Signup successful. Check your email to confirm.");
         }
@@ -45,75 +51,65 @@ export default function Page() {
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "24px",
-        textAlign: "center",
-      }}
-    >
-      <div
-        className="card pad"
-        style={{ width: "100%", maxWidth: 700, padding: "36px", margin: "0 auto" }}
-      >
-        <h1 className="h1" style={{ marginBottom: 8, textAlign: "center" }}>
-          Sign {mode === "signin" ? "In" : "Up"}
-        </h1>
-        <p className="help" style={{ marginTop: -10, marginBottom: 24 }}>
-          Use your email and password.
-        </p>
-
-        <form onSubmit={handleSubmit} style={{ display: "grid", gap: 18 }}>
-          <input
-            className="input"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ padding: "16px", fontSize: "16px", width: "100%" }}
-          />
-          <input
-            className="input"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{ padding: "16px", fontSize: "16px", width: "100%" }}
-          />
-          {error ? <div style={{ color: "var(--neg)", textAlign: "center" }}>{error}</div> : null}
-          {notice ? <div style={{ color: "var(--pos)", textAlign: "center" }}>{notice}</div> : null}
-          <button
-            className="input"
-            type="submit"
-            disabled={loading}
-            style={{ padding: "16px", fontSize: "16px", width: "100%" }}
-          >
-            {loading ? "Please wait..." : mode === "signin" ? "Sign In" : "Sign Up"}
-          </button>
-        </form>
-
-        <div style={{ marginTop: 20 }}>
-          {mode === "signin" ? (
-            <button
-              className="input"
-              onClick={() => setMode("signup")}
-              style={{ padding: "14px", width: "100%" }}
-            >
-              Create an account
-            </button>
+    <div className="login-screen pattern-bg">
+      <div className="login-center">
+        <div className="login-card card">
+          <div className="login-brand">
+            <img src="/UMBCLogo.png" alt="UMBC Logo" className="login-logo" />
+            <h1 className="login-title">VMS<span className="login-accent">UMBC</span></h1>
+          </div>
+          {!sessionChecked ? (
+            <p className="login-msg notice">Checking session...</p>
+          ) : hasSession ? (
+            <div className="login-form" style={{textAlign:"center"}}>
+              <h2 className="login-heading" style={{marginTop:0}}>Already Signed In</h2>
+              <p className="login-sub">You are currently authenticated.</p>
+              <div style={{display:"flex", gap:"16px", flexWrap:"wrap", justifyContent:"center"}}>
+                <button className="btn login-submit" onClick={() => router.replace('/dashboard')} disabled={loading}>Go to Dashboard</button>
+                <button className="btn-soft login-switch" onClick={async()=>{ setLoading(true); await supabase?.auth.signOut(); setLoading(false); setHasSession(false); }} disabled={loading}>Sign Out</button>
+              </div>
+            </div>
           ) : (
-            <button
-              className="input"
-              onClick={() => setMode("signin")}
-              style={{ padding: "14px", width: "100%" }}
-            >
-              Already have an account? Sign In
-            </button>
+            <>
+              <h2 className="login-heading" style={{marginTop:0}}>Sign {mode === "signin" ? "In" : "Up"}</h2>
+              <p className="login-sub">Use your email and password.</p>
+              <form onSubmit={handleSubmit} className="login-form">
+                <label className="login-field">
+                  <span className="visually-hidden">Email</span>
+                  <input
+                    className="input login-input"
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </label>
+                <label className="login-field">
+                  <span className="visually-hidden">Password</span>
+                  <input
+                    className="input login-input"
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </label>
+                {error ? <div className="login-msg error">{error}</div> : null}
+                {notice ? <div className="login-msg notice">{notice}</div> : null}
+                <button className="btn login-submit" type="submit" disabled={loading}>
+                  {loading ? "Please wait..." : mode === "signin" ? "Sign In" : "Sign Up"}
+                </button>
+              </form>
+              <div className="login-alt">
+                {mode === "signin" ? (
+                  <button className="btn-soft login-switch" onClick={() => setMode("signup")}>Create an account</button>
+                ) : (
+                  <button className="btn-soft login-switch" onClick={() => setMode("signin")}>Already have an account? Sign In</button>
+                )}
+              </div>
+            </>
           )}
         </div>
       </div>
