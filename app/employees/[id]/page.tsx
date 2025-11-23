@@ -83,104 +83,98 @@ export default function EmployeeDetail() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: 24, padding: 24 }}>
-            <div style={{ flex: 1.5, minWidth: 0 }}>
-              <div className="title">Visa & Employment History</div>
-              <div className="detail-middle card" style={{ marginTop: 10 }}>
-                {/* Render processed visas */}
-                <table className="table" style={{ width: '100%' }}>
-                  <thead>
-                    <tr><th>Start Date</th><th>End Date</th><th>Visa</th><th>Position</th><th>Notes</th></tr>
-                  </thead>
-                  <tbody>
-                    {employee.visas && employee.visas.length > 0 ? (
-                      employee.visas.map((v: any) => (
-                        <tr key={v.id}>
-                          <td>{v.startDate ? new Date(v.startDate).toLocaleDateString() : '—'}</td>
-                          <td>{v.endDate ? new Date(v.endDate).toLocaleDateString() : 'Present'}</td>
-                          <td>{String(v.type ?? '—')}</td>
-                          <td>{String(v.position ?? '—')}</td>
-                          <td style={{ maxWidth: 300, overflow: 'hidden', textOverflow: 'ellipsis' }}>{v.raw ? Object.values(v.raw).map((x:any)=> (x===null||x===undefined||x=== '')? '—' : String(x)).join(' | ') : '—'}</td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr><td colSpan={5}>No visas</td></tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+          <div style={{ padding: 24 }}>
+            <div className="title" style={{ marginBottom: 10 }}>Visa & Employment History</div>
+            <div className="detail-middle card" style={{ marginTop: 0 }}>
+              <table className="table" style={{ width: '100%' }}>
+                <thead>
+                  <tr><th>Start Date</th><th>End Date</th><th>Visa</th><th>Position</th><th>Notes</th></tr>
+                </thead>
+                <tbody>
+                  {employee.visas && employee.visas.length > 0 ? (
+                    employee.visas.map((v: any) => (
+                      <tr key={v.id}>
+                        <td>{v.startDate ? new Date(v.startDate).toLocaleDateString() : '—'}</td>
+                        <td>{v.endDate ? new Date(v.endDate).toLocaleDateString() : 'Present'}</td>
+                        <td>{String(v.type ?? '—')}</td>
+                        <td>{String(v.position ?? '—')}</td>
+                        <td style={{ maxWidth: 300, overflow: 'hidden', textOverflow: 'ellipsis' }}>{v.raw ? Object.values(v.raw).map((x:any)=> (x===null||x===undefined||x=== '')? '—' : String(x)).join(' | ') : '—'}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr><td colSpan={5}>No visas</td></tr>
+                  )}
+                </tbody>
+              </table>
             </div>
 
-            {/* Notes column stays within the white card */}
-            <div className="notes-column" style={{ flex: 1, minWidth: 0 }}>
-              <div className="title">Notes</div>
-              <div style={{ marginTop: 8 }}>
-                <div className="notes-panel">
-                  <textarea
-                    value={newNote}
-                    onChange={(e)=>setNewNote(e.target.value)}
-                    className="input"
-                    placeholder="Add new note..."
-                    rows={6}
-                    style={{ width: '100%', resize: 'vertical' }}
-                  ></textarea>
-                </div>
-                <div style={{ marginTop: 8 }}>
-                  <button className="btn btn-flag" onClick={addNote} style={{ width: 'auto', minWidth: 120 }}>
-                    SAVE NOTE
-                  </button>
+            {/* Raw imported rows below history */}
+            <div style={{ marginTop: 28 }}>
+              <div className="title" style={{ marginBottom: 10 }}>All imported columns (raw rows)</div>
+              <div className="detail-raw card" style={{ marginTop: 0 }}>
+                <div className="list-wrap">
+                  {(() => {
+                    const headers = Array.from(new Set([].concat(...(employee.rawRows || []).map((r: any) => Object.keys(r)))));
+                    const showVal = (v: any) => (v === null || v === undefined || v === '' ? '—' : String(v));
+                    return (employee.rawRows || []).map((r: any, idx: number) => (
+                      <div className="kv-card" key={idx}>
+                        <div className="help">Row {idx + 1}</div>
+                        <div className="kv-grid">
+                          {headers.map((h: any) => (
+                            <React.Fragment key={h}>
+                              <div className="kv-key">{h}</div>
+                              <div className="kv-val">{showVal(r[h])}</div>
+                            </React.Fragment>
+                          ))}
+                        </div>
+                      </div>
+                    ));
+                  })()}
                 </div>
               </div>
-
-              <ul className="notes-list" style={{ marginTop: 12 }}>
-                {employee.notes && employee.notes.length > 0 ? (
-                  employee.notes.map((n: any)=> (
-                    <li key={n.id} style={{ padding: 12, borderBottom: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-                      <div style={{ flex: 1 }}>
-                        <div className="help">{new Date(n.createdAt).toLocaleString()}</div>
-                        <div style={{ marginTop: 4 }}>{n.content}</div>
-                      </div>
-                      <div style={{ width: 100, textAlign: 'right' }}>
-                        <button className="btn btn-flag" onClick={()=>deleteNote(n.id)} style={{ width: 'auto', minWidth: 80, fontSize: '12px' }}>
-                          DELETE
-                        </button>
-                      </div>
-                    </li>
-                  ))
-                ) : (
-                  <li style={{ padding: 12 }}>No notes</li>
-                )}
-              </ul>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Rework “All imported columns” to a vertical key/value view */}
-          <section className="card section" style={{ margin: 24 }}>
-            <div className="title">All imported columns (raw rows)</div>
-            <div className="detail-raw card" style={{ marginTop: 10 }}>
-              <div className="list-wrap">
-                {(() => {
-                  const headers = Array.from(
-                    new Set([].concat(...(employee.rawRows || []).map((r: any) => Object.keys(r))))
-                  );
-                  const showVal = (v: any) => (v === null || v === undefined || v === '' ? '—' : String(v));
-                  return (employee.rawRows || []).map((r: any, idx: number) => (
-                    <div className="kv-card" key={idx}>
-                      <div className="help">Row {idx + 1}</div>
-                      <div className="kv-grid">
-                        {headers.map((h: any) => (
-                          <React.Fragment key={h}>
-                            <div className="kv-key">{h}</div>
-                            <div className="kv-val">{showVal(r[h])}</div>
-                          </React.Fragment>
-                        ))}
-                      </div>
-                    </div>
-                  ));
-                })()}
-              </div>
+      {/* Notes moved to its own full-width card beneath history */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 32 }}>
+        <div className="card employee-detail-card" style={{ borderRadius: 12, maxWidth: '95vw', width: '100%' }}>
+          <div style={{ padding: 24 }}>
+            <div className="title" style={{ marginBottom: 12 }}>Notes</div>
+            <textarea
+              value={newNote}
+              onChange={(e)=>setNewNote(e.target.value)}
+              className="input"
+              placeholder="Add new note..."
+              rows={8}
+              style={{ width: '100%', resize: 'vertical', fontSize: '15px' }}
+            ></textarea>
+            <div style={{ marginTop: 12 }}>
+              <button className="btn btn-flag" onClick={addNote} style={{ width: 'auto', minWidth: 140 }}>
+                SAVE NOTE
+              </button>
             </div>
-          </section>
+            <ul className="notes-list" style={{ marginTop: 18 }}>
+              {employee.notes && employee.notes.length > 0 ? (
+                employee.notes.map((n: any)=> (
+                  <li key={n.id} style={{ padding: 14, borderBottom: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', gap: 14 }}>
+                    <div style={{ flex: 1 }}>
+                      <div className="help" style={{ fontWeight: 600 }}>{new Date(n.createdAt).toLocaleString()}</div>
+                      <div style={{ marginTop: 6, lineHeight: 1.4 }}>{n.content}</div>
+                    </div>
+                    <div style={{ width: 110, textAlign: 'right' }}>
+                      <button className="btn btn-flag" onClick={()=>deleteNote(n.id)} style={{ width: 'auto', minWidth: 90, fontSize: '12px' }}>
+                        DELETE
+                      </button>
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <li style={{ padding: 14 }}>No notes</li>
+              )}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

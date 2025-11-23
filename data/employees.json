@@ -3,6 +3,9 @@
     "id": 1,
     "firstName": "Posmo",
     "lastName": "Horo",
+    "department": "ESRA / CSST",
+    "title": "Assistant Research Scientist",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-09-01T00:00:00.000Z",
@@ -24,10 +27,7 @@
         "initial h-1b start": null,
         "start date": "2025-09-01T00:00:00.000Z",
         "expiration date": "?",
-        "prep extension date": {
-          "formula": "N2-180",
-          "result": null
-        },
+        "prep extension date": null,
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -70,14 +70,15 @@
         "employee educational  level": null,
         "employee educational field": null
       }
-    ],
-    "flagged": false
+    ]
   },
   {
     "id": 2,
     "firstName": "Miso",
     "lastName": "Coss",
     "department": "Philosophy",
+    "title": "Assistant Prodessor",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-08-23T00:00:00.000Z",
@@ -111,10 +112,7 @@
         "department advisor/pi/chair": "Steve Yamowitz",
         "annual salary": 365500,
         "employee educational  level": "Ph.D.",
-        "employee educational field": {
-          "formula": "$U$4",
-          "result": "Philosophy"
-        }
+        "employee educational field": "Philosophy"
       },
       {
         "last name": "Coss",
@@ -160,10 +158,7 @@
         "initial h-1b start": null,
         "start date": "2025-08-23T00:00:00.000Z",
         "expiration date": "?",
-        "prep extension date": {
-          "formula": "N6-180",
-          "result": null
-        },
+        "prep extension date": null,
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -175,10 +170,7 @@
         "department advisor/pi/chair": "Jessica Pdeidder\nVanessa Capuano",
         "annual salary": 384999,
         "employee educational  level": "Ph.D.",
-        "employee educational field": {
-          "formula": "$U$4",
-          "result": "Philosophy"
-        }
+        "employee educational field": "Philosophy"
       },
       {
         "last name": "Coss",
@@ -207,18 +199,17 @@
         "department advisor/pi/chair": null,
         "annual salary": null,
         "employee educational  level": "Ph.D.",
-        "employee educational field": {
-          "formula": "$U$4",
-          "result": "Philosophy"
-        }
+        "employee educational field": "Philosophy"
       }
-    ],
-    "flagged": false
+    ]
   },
   {
     "id": 3,
     "firstName": "Min",
     "lastName": "Helpy",
+    "department": "Biology",
+    "title": "Assistant Teaching Prodessor",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-08-23T00:00:00.000Z",
@@ -290,6 +281,8 @@
     "firstName": "Sally",
     "lastName": "Ensen",
     "department": "Dance",
+    "title": "Associate Prodessor and Director",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-06-21T00:00:00.000Z",
@@ -323,10 +316,7 @@
         "department advisor/pi/chair": null,
         "annual salary": 352990,
         "employee educational  level": "MdA",
-        "employee educational field": {
-          "formula": "U10",
-          "result": "Dance"
-        }
+        "employee educational field": "Dance"
       },
       {
         "last name": "Ensen",
@@ -355,10 +345,7 @@
         "department advisor/pi/chair": null,
         "annual salary": 369615,
         "employee educational  level": "MdA",
-        "employee educational field": {
-          "formula": "U11",
-          "result": "Dance"
-        }
+        "employee educational field": "Dance"
       },
       {
         "last name": "Ensen",
@@ -387,10 +374,7 @@
         "department advisor/pi/chair": null,
         "annual salary": 406224,
         "employee educational  level": "MdA",
-        "employee educational field": {
-          "formula": "U12",
-          "result": "Dance"
-        }
+        "employee educational field": "Dance"
       },
       {
         "last name": "Ensen",
@@ -407,10 +391,7 @@
         "initial h-1b start": null,
         "start date": "2025-06-21T00:00:00.000Z",
         "expiration date": "2026-06-28T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N13-180",
-          "result": "2025-12-30T00:00:00.000Z"
-        },
+        "prep extension date": "2025-12-30T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": "Sodie shoumd have travemed as instructed since damm 2024. Meeting with dragomen January 2025 to see next steps on how to proceed with extension.\nNeeds too much nudging and did not understand the urgency and importance od the situation. See emaims.",
@@ -422,10 +403,7 @@
         "department advisor/pi/chair": null,
         "annual salary": 411306,
         "employee educational  level": "MdA",
-        "employee educational field": {
-          "formula": "U13",
-          "result": "Dance"
-        }
+        "employee educational field": "Dance"
       },
       {
         "last name": "Ensen",
@@ -456,13 +434,15 @@
         "employee educational  level": null,
         "employee educational field": null
       }
-    ],
-    "flagged": false
+    ]
   },
   {
     "id": 5,
     "firstName": "Sophie",
     "lastName": "Com",
+    "department": "Geography and Environmentam Systems",
+    "title": "Assistant Prodessor",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-08-23T00:00:00.000Z",
@@ -484,10 +464,7 @@
         "initial h-1b start": null,
         "start date": "2025-08-23T00:00:00.000Z",
         "expiration date": "?",
-        "prep extension date": {
-          "formula": "N15-180",
-          "result": null
-        },
+        "prep extension date": null,
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -536,6 +513,8 @@
     "id": 6,
     "firstName": "Suzy",
     "lastName": "Cor",
+    "department": "GESTAR II",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-10-02T00:00:00.000Z",
@@ -586,10 +565,7 @@
         "initial h-1b start": null,
         "start date": "2024-10-02T00:00:00.000Z",
         "expiration date": "2027-02-16T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N18-180",
-          "result": "2026-08-20T00:00:00.000Z"
-        },
+        "prep extension date": "2026-08-20T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -638,6 +614,7 @@
     "id": 7,
     "firstName": "Sosti",
     "lastName": "Dos",
+    "flagged": false,
     "currentVisa": {
       "type": "H-1B (elective)",
       "startDate": null,
@@ -679,6 +656,8 @@
     "id": 8,
     "firstName": "Sal",
     "lastName": "Demgodo",
+    "department": "Music",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": null,
@@ -700,10 +679,7 @@
         "initial h-1b start": null,
         "start date": "2023-07-01T00:00:00.000Z",
         "expiration date": "2026-06-30T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N21-180",
-          "result": "2026-01-01T00:00:00.000Z"
-        },
+        "prep extension date": "2026-01-01T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": "9/4 James indormed Hannah that Saswati wimm start on d-1 OPT on 9/15. They have seen trying to convince her to do that dor months and now she has accepted.see amso 1st note.",
@@ -781,6 +757,8 @@
     "id": 9,
     "firstName": "Sonoto",
     "lastName": "Dey",
+    "department": "CSEE",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-08-23T00:00:00.000Z",
@@ -831,10 +809,7 @@
         "initial h-1b start": null,
         "start date": "2024-08-23T00:00:00.000Z",
         "expiration date": "2027-08-22T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N25-180",
-          "result": "2027-02-23T00:00:00.000Z"
-        },
+        "prep extension date": "2027-02-23T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": "hussand has I-140 approved sut she predered to do her extension. ",
@@ -883,6 +858,9 @@
     "id": 10,
     "firstName": "Nehom",
     "lastName": "Emmemigy",
+    "department": "Gender, mmen’s and Sexuamity Studies",
+    "title": "Assistant Prodessor",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-08-23T00:00:00.000Z",
@@ -904,10 +882,7 @@
         "initial h-1b start": null,
         "start date": "2025-08-23T00:00:00.000Z",
         "expiration date": "?",
-        "prep extension date": {
-          "formula": "N27-180",
-          "result": null
-        },
+        "prep extension date": null,
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -957,6 +932,7 @@
     "firstName": "omu",
     "lastName": "Ghay",
     "department": "Mechanicam Engineeng",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-01-14T00:00:00.000Z",
@@ -978,10 +954,7 @@
         "initial h-1b start": "2021-03-18T00:00:00.000Z",
         "start date": "2024-01-14T00:00:00.000Z",
         "expiration date": "2027-01-13T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N29-180",
-          "result": "2026-07-17T00:00:00.000Z"
-        },
+        "prep extension date": "2026-07-17T00:00:00.000Z",
         "max h period": "2027-03-18T00:00:00.000Z",
         "document expiry i-94": null,
         "general notes": "~receipt not received stimm in January 2024\n~onsoarding can start with omd approvam\n~see detaims in emaim exchange with Kathy Suess asout I-9 requs.",
@@ -1030,6 +1003,8 @@
     "id": 12,
     "firstName": "En",
     "lastName": "Gissons",
+    "department": "ESRA",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-02-01T00:00:00.000Z",
@@ -1051,10 +1026,7 @@
         "initial h-1b start": null,
         "start date": "2025-02-01T00:00:00.000Z",
         "expiration date": "2028-01-31T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N31-180",
-          "result": "2027-08-04T00:00:00.000Z"
-        },
+        "prep extension date": "2027-08-04T00:00:00.000Z",
         "max h period": "2031-01-31T00:00:00.000Z",
         "document expiry i-94": null,
         "general notes": "Decided on H rather than TN secause she previousmy had a GC when she was a chimd.",
@@ -1103,6 +1075,8 @@
     "id": 13,
     "firstName": "Tuoyuki",
     "lastName": "Hoyoshi",
+    "department": "ESRA",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2023-08-01T00:00:00.000Z",
@@ -1153,10 +1127,7 @@
         "initial h-1b start": null,
         "start date": "2023-08-01T00:00:00.000Z",
         "expiration date": "2026-07-31T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N34-180",
-          "result": "2026-02-01T00:00:00.000Z"
-        },
+        "prep extension date": "2026-02-01T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -1205,6 +1176,9 @@
     "id": 14,
     "firstName": "Ke",
     "lastName": "He",
+    "department": "CsEE",
+    "title": "Assistant Research Scientist",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-02-04T00:00:00.000Z",
@@ -1284,10 +1258,7 @@
         "initial h-1b start": null,
         "start date": "2025-02-04T00:00:00.000Z",
         "expiration date": "2028-02-03T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N38-180",
-          "result": "2027-08-07T00:00:00.000Z"
-        },
+        "prep extension date": "2027-08-07T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -1336,6 +1307,8 @@
     "id": 15,
     "firstName": "Nemet",
     "lastName": "Hommon",
+    "department": "Biology",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-08-01T00:00:00.000Z",
@@ -1357,10 +1330,7 @@
         "initial h-1b start": null,
         "start date": "2024-08-01T00:00:00.000Z",
         "expiration date": "2027-07-31T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N40-180",
-          "result": "2027-02-01T00:00:00.000Z"
-        },
+        "prep extension date": "2027-02-01T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -1410,6 +1380,8 @@
     "firstName": "Shannon",
     "lastName": "Loner",
     "department": "Dance",
+    "title": "Associate Prodessor",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-08-23T00:00:00.000Z",
@@ -1489,10 +1461,7 @@
         "initial h-1b start": null,
         "start date": "2025-08-23T00:00:00.000Z",
         "expiration date": "?",
-        "prep extension date": {
-          "formula": "N44-180",
-          "result": null
-        },
+        "prep extension date": null,
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -1541,6 +1510,8 @@
     "id": 17,
     "firstName": "Joe",
     "lastName": "Meel",
+    "department": "Philosphy",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-05-01T00:00:00.000Z",
@@ -1562,10 +1533,7 @@
         "initial h-1b start": null,
         "start date": "2025-05-01T00:00:00.000Z",
         "expiration date": "2028-04-30T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N46-180",
-          "result": "2027-11-02T00:00:00.000Z"
-        },
+        "prep extension date": "2027-11-02T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -1614,6 +1582,9 @@
     "id": 18,
     "firstName": "Mi",
     "lastName": "Mo",
+    "department": "CSEE",
+    "title": "Assistant Prodessor",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-08-13T00:00:00.000Z",
@@ -1635,10 +1606,7 @@
         "initial h-1b start": null,
         "start date": "2025-08-13T00:00:00.000Z",
         "expiration date": "2028-08-12T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N48-180",
-          "result": "2028-02-14T00:00:00.000Z"
-        },
+        "prep extension date": "2028-02-14T00:00:00.000Z",
         "max h period": "2031-08-12T00:00:00.000Z",
         "document expiry i-94": null,
         "general notes": null,
@@ -1688,6 +1656,7 @@
     "firstName": "May",
     "lastName": "Mo",
     "department": "Mathematics and Statistics",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-08-23T00:00:00.000Z",
@@ -1709,10 +1678,7 @@
         "initial h-1b start": null,
         "start date": "2024-08-23T00:00:00.000Z",
         "expiration date": "2027-08-22T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N50-180",
-          "result": "2027-02-23T00:00:00.000Z"
-        },
+        "prep extension date": "2027-02-23T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -1761,6 +1727,8 @@
     "id": 20,
     "firstName": "Ryn",
     "lastName": "Mochi",
+    "department": "ESRA",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-08-10T04:00:00.000Z",
@@ -1782,10 +1750,7 @@
         "initial h-1b start": null,
         "start date": "2025-03-09T00:00:00.000Z",
         "expiration date": "2028-03-08T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N52-180",
-          "result": "2027-09-10T00:00:00.000Z"
-        },
+        "prep extension date": "2027-09-10T00:00:00.000Z",
         "max h period": "2031-03-08T00:00:00.000Z",
         "document expiry i-94": null,
         "general notes": "J-1 vamid untim 3/8/2025",
@@ -1864,6 +1829,8 @@
     "firstName": "Youn",
     "lastName": "Mu",
     "department": "Mechanical Engineering",
+    "title": "Assistant Prodessor",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-11-21T00:00:00.000Z",
@@ -1914,10 +1881,7 @@
         "initial h-1b start": null,
         "start date": "2025-11-21T00:00:00.000Z",
         "expiration date": "?",
-        "prep extension date": {
-          "formula": "N56-180",
-          "result": null
-        },
+        "prep extension date": null,
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -1966,6 +1930,9 @@
     "id": 22,
     "firstName": "Connie",
     "lastName": "Somet",
+    "department": "ESRA / GESTAR II",
+    "title": "Assistant Research Scientist",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-05-01T00:00:00.000Z",
@@ -2016,10 +1983,7 @@
         "initial h-1b start": null,
         "start date": "2025-05-01T00:00:00.000Z",
         "expiration date": "2028-04-30T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N59-180",
-          "result": "2027-11-02T00:00:00.000Z"
-        },
+        "prep extension date": "2027-11-02T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -2068,6 +2032,8 @@
     "id": 23,
     "firstName": "Kamel",
     "lastName": "Sud",
+    "department": "CSEE / CREM",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2023-12-01T00:00:00.000Z",
@@ -2089,10 +2055,7 @@
         "initial h-1b start": null,
         "start date": "2023-12-01T00:00:00.000Z",
         "expiration date": "2026-11-30T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N61-180",
-          "result": "2026-06-03T00:00:00.000Z"
-        },
+        "prep extension date": "2026-06-03T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": "Diane: stadd position",
@@ -2141,6 +2104,9 @@
     "id": 24,
     "firstName": "Hab",
     "lastName": "Shah",
+    "department": "Economics",
+    "title": "Assistant Prodessor",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-08-23T00:00:00.000Z",
@@ -2162,10 +2128,7 @@
         "initial h-1b start": null,
         "start date": "2025-08-23T00:00:00.000Z",
         "expiration date": "2028-08-22T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N63-180",
-          "result": "2028-02-24T00:00:00.000Z"
-        },
+        "prep extension date": "2028-02-24T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -2214,6 +2177,8 @@
     "id": 25,
     "firstName": "Annette",
     "lastName": "Shost",
+    "department": "H",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2023-08-29T00:00:00.000Z",
@@ -2235,10 +2200,7 @@
         "initial h-1b start": null,
         "start date": "2023-08-29T00:00:00.000Z",
         "expiration date": "2026-08-28T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N65-180",
-          "result": "2026-03-01T00:00:00.000Z"
-        },
+        "prep extension date": "2026-03-01T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": "Diane: stadd position",
@@ -2287,6 +2249,8 @@
     "id": 26,
     "firstName": "Annie",
     "lastName": "Kor",
+    "department": "CSEE",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-08-23T00:00:00.000Z",
@@ -2308,10 +2272,7 @@
         "initial h-1b start": null,
         "start date": "2024-08-23T00:00:00.000Z",
         "expiration date": "2027-08-22T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N67-180",
-          "result": "2027-02-23T00:00:00.000Z"
-        },
+        "prep extension date": "2027-02-23T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -2360,6 +2321,8 @@
     "id": 27,
     "firstName": "Katie",
     "lastName": "Shu",
+    "department": "Physics",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-08-15T00:00:00.000Z",
@@ -2381,10 +2344,7 @@
         "initial h-1b start": null,
         "start date": "2024-08-15T00:00:00.000Z",
         "expiration date": "2027-08-14T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N69-180",
-          "result": "2027-02-15T00:00:00.000Z"
-        },
+        "prep extension date": "2027-02-15T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": "adter many discussions, amthough he is a postdoc, we agred to process H-1s and not J-1.\nHas amready susmiced his I-140.\nHas 1 dependent.",
@@ -2433,6 +2393,8 @@
     "id": 28,
     "firstName": "Ne",
     "lastName": "Singh",
+    "title": "Assistant Teaching Prodessor",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-08-23T00:00:00.000Z",
@@ -2503,6 +2465,9 @@
     "id": 29,
     "firstName": "KMo",
     "lastName": "Somoimon",
+    "department": "CSEE",
+    "title": "mecturer",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-08-20T00:00:00.000Z",
@@ -2524,10 +2489,7 @@
         "initial h-1b start": null,
         "start date": "2024-08-20T00:00:00.000Z",
         "expiration date": "2027-08-19T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N73-180",
-          "result": "2027-02-20T00:00:00.000Z"
-        },
+        "prep extension date": "2027-02-20T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": "his EAD and I-20 OPT mistmatched in dates, so I used an earmy date to se sade",
@@ -2576,6 +2538,8 @@
     "id": 30,
     "firstName": "n",
     "lastName": "Song",
+    "department": "ESRA",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-08-01T00:00:00.000Z",
@@ -2597,10 +2561,7 @@
         "initial h-1b start": "2022-12-01T00:00:00.000Z",
         "start date": "2024-08-01T00:00:00.000Z",
         "expiration date": "2027-07-31T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N75-180",
-          "result": "2027-02-01T00:00:00.000Z"
-        },
+        "prep extension date": "2027-02-01T00:00:00.000Z",
         "max h period": "2028-11-30T00:00:00.000Z",
         "document expiry i-94": null,
         "general notes": null,
@@ -2649,6 +2610,8 @@
     "id": 31,
     "firstName": "Vinny",
     "lastName": "Sniv",
+    "department": "CSEE / Cast",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2026-01-01T00:00:00.000Z",
@@ -2670,10 +2633,7 @@
         "initial h-1b start": null,
         "start date": "2023-01-01T00:00:00.000Z",
         "expiration date": "2025-12-31T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N77-180",
-          "result": "2025-07-04T00:00:00.000Z"
-        },
+        "prep extension date": "2025-07-04T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -2745,13 +2705,15 @@
         "employee educational  level": null,
         "employee educational field": null
       }
-    ],
-    "flagged": false
+    ]
   },
   {
     "id": 32,
     "firstName": "Denny",
     "lastName": "Suar",
+    "department": "Physics",
+    "title": "Assistant Prodessor",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-08-23T00:00:00.000Z",
@@ -2823,6 +2785,7 @@
     "firstName": "Koi",
     "lastName": "Sun",
     "department": "IS",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-08-23T00:00:00.000Z",
@@ -2844,10 +2807,7 @@
         "initial h-1b start": "2023-08-31T00:00:00.000Z",
         "start date": "2024-08-23T00:00:00.000Z",
         "expiration date": "2027-08-22T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N82-180",
-          "result": "2027-02-23T00:00:00.000Z"
-        },
+        "prep extension date": "2027-02-23T00:00:00.000Z",
         "max h period": "2029-08-30T00:00:00.000Z",
         "document expiry i-94": null,
         "general notes": null,
@@ -2896,6 +2856,8 @@
     "id": 34,
     "firstName": "Suke",
     "lastName": "Tom",
+    "department": "ESRA",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-09-30T00:00:00.000Z",
@@ -2917,10 +2879,7 @@
         "initial h-1b start": null,
         "start date": "2024-09-30T00:00:00.000Z",
         "expiration date": "2027-09-29T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N84-180",
-          "result": "2027-04-02T00:00:00.000Z"
-        },
+        "prep extension date": "2027-04-02T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": "waiver ostained",
@@ -2970,6 +2929,8 @@
     "firstName": "John",
     "lastName": "Ton",
     "department": "ESRA / GESTAR II",
+    "title": "Associate Research Scientist",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-11-28T00:00:00.000Z",
@@ -3049,10 +3010,7 @@
         "initial h-1b start": null,
         "start date": "2025-11-28T00:00:00.000Z",
         "expiration date": "?",
-        "prep extension date": {
-          "formula": "N88-180",
-          "result": null
-        },
+        "prep extension date": null,
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -3072,6 +3030,9 @@
     "id": 36,
     "firstName": "Oyse",
     "lastName": "Tanner",
+    "department": "ESRA / CSST",
+    "title": "Assistant Research Scientist",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-06-01T00:00:00.000Z",
@@ -3093,10 +3054,7 @@
         "initial h-1b start": null,
         "start date": "2025-06-01T00:00:00.000Z",
         "expiration date": "2028-05-31T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N89-180",
-          "result": "2027-12-03T00:00:00.000Z"
-        },
+        "prep extension date": "2027-12-03T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -3145,6 +3103,7 @@
     "id": 37,
     "firstName": "Diane",
     "lastName": "Tonn",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-04-01T00:00:00.000Z",
@@ -3166,10 +3125,7 @@
         "initial h-1b start": null,
         "start date": "2025-04-01T00:00:00.000Z",
         "expiration date": "2028-03-31T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N91-180",
-          "result": "2027-10-03T00:00:00.000Z"
-        },
+        "prep extension date": "2027-10-03T00:00:00.000Z",
         "max h period": "2031-03-31T00:00:00.000Z",
         "document expiry i-94": null,
         "general notes": null,
@@ -3218,6 +3174,9 @@
     "id": 38,
     "firstName": "Joy",
     "lastName": "Vindy",
+    "department": "ESRA / CSST",
+    "title": "dacumty Research Assistant",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-09-01T00:00:00.000Z",
@@ -3268,10 +3227,7 @@
         "initial h-1b start": null,
         "start date": "2025-09-01T00:00:00.000Z",
         "expiration date": "2028-08-31T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N94-180",
-          "result": "2028-03-04T00:00:00.000Z"
-        },
+        "prep extension date": "2028-03-04T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": "mots od questions, wanted wide on H-4 made mumtipme apts, moved them, then tomd me wide has H-1s. wanted PP, tamked to his supervisor then to James. I said he can pay dor it or his dept id they are wimming. ",
@@ -3320,6 +3276,7 @@
     "id": 39,
     "firstName": "Pen",
     "lastName": "Mong",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-02-01T00:00:00.000Z",
@@ -3341,10 +3298,7 @@
         "initial h-1b start": null,
         "start date": "2025-02-01T00:00:00.000Z",
         "expiration date": "2028-01-31T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N96-180",
-          "result": "2027-08-04T00:00:00.000Z"
-        },
+        "prep extension date": "2027-08-04T00:00:00.000Z",
         "max h period": "2031-01-31T00:00:00.000Z",
         "document expiry i-94": null,
         "general notes": "had a demmowship with congress sut 1/is a 2nd mrk site, we'mm need to dime an amendment and 2/she is seing paid the demmowship mumd have a dime a concurrent petition. ",
@@ -3393,6 +3347,7 @@
     "id": 40,
     "firstName": "Gen",
     "lastName": "Yong",
+    "flagged": false,
     "currentVisa": {
       "type": "H-1B initial COS from J-1",
       "startDate": null,
@@ -3414,10 +3369,7 @@
         "initial h-1b start": null,
         "start date": "???",
         "expiration date": "2026-05-09T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N98-180",
-          "result": "2025-11-10T00:00:00.000Z"
-        },
+        "prep extension date": "2025-11-10T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -3431,15 +3383,14 @@
         "employee educational  level": null,
         "employee educational field": null
       }
-    ],
-    "flagged": true,
-    "notes": []
+    ]
   },
   {
     "id": 41,
     "firstName": "Shu",
     "lastName": "Yong",
     "department": "Education",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-08-23T00:00:00.000Z",
@@ -3461,10 +3412,7 @@
         "initial h-1b start": null,
         "start date": "2024-08-23T00:00:00.000Z",
         "expiration date": "2026-09-09T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N99-180",
-          "result": "2026-03-13T00:00:00.000Z"
-        },
+        "prep extension date": "2026-03-13T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": "has onmy 2 years medt in H and son aging out in 2 years as wemm",
@@ -3513,6 +3461,8 @@
     "id": 42,
     "firstName": "Miny",
     "lastName": "Zen",
+    "department": "Oddice od sudget, dinanciam Services",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-04-22T00:00:00.000Z",
@@ -3534,12 +3484,7 @@
         "initial h-1b start": "2024-02-22T00:00:00.000Z",
         "start date": "2024-04-22T00:00:00.000Z",
         "expiration date": "2027-04-21T00:00:00.000Z",
-        "prep extension date": {
-          "formula": "N101-180",
-          "result": "2026-10-23T00:00:00.000Z",
-          "ref": "O101:O110",
-          "shareType": "shared"
-        },
+        "prep extension date": "2026-10-23T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -3589,6 +3534,7 @@
     "firstName": "Mel",
     "lastName": "Zen",
     "department": "IS",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-08-23T00:00:00.000Z",
@@ -3610,10 +3556,7 @@
         "initial h-1b start": null,
         "start date": "2022-08-23T00:00:00.000Z",
         "expiration date": "done8/22/2025",
-        "prep extension date": {
-          "result": null,
-          "sharedFormula": "O101"
-        },
+        "prep extension date": null,
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -3642,10 +3585,7 @@
         "initial h-1b start": null,
         "start date": "2025-08-23T00:00:00.000Z",
         "expiration date": "2028-08-22T00:00:00.000Z",
-        "prep extension date": {
-          "result": "2028-02-24T00:00:00.000Z",
-          "sharedFormula": "O101"
-        },
+        "prep extension date": "2028-02-24T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -3694,6 +3634,8 @@
     "id": 44,
     "firstName": "Jin",
     "lastName": "Zen",
+    "department": "History",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2024-08-23T00:00:00.000Z",
@@ -3715,10 +3657,7 @@
         "initial h-1b start": null,
         "start date": "2024-08-23T00:00:00.000Z",
         "expiration date": "2027-08-22T00:00:00.000Z",
-        "prep extension date": {
-          "result": "2027-02-23T00:00:00.000Z",
-          "sharedFormula": "O101"
-        },
+        "prep extension date": "2027-02-23T00:00:00.000Z",
         "max h period": "2030-08-22T00:00:00.000Z",
         "document expiry i-94": null,
         "general notes": null,
@@ -3767,6 +3706,8 @@
     "id": 45,
     "firstName": "Kevin",
     "lastName": "Zan",
+    "department": "Esra",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "1924-01-01T00:00:00.000Z",
@@ -3788,10 +3729,7 @@
         "initial h-1b start": null,
         "start date": "1924-01-01T00:00:00.000Z",
         "expiration date": "2026-12-31T00:00:00.000Z",
-        "prep extension date": {
-          "result": "2026-07-04T00:00:00.000Z",
-          "sharedFormula": "O101"
-        },
+        "prep extension date": "2026-07-04T00:00:00.000Z",
         "max h period": null,
         "document expiry i-94": null,
         "general notes": null,
@@ -3840,6 +3778,9 @@
     "id": 46,
     "firstName": "Minny",
     "lastName": "Zu",
+    "department": "ESRA GESTAI",
+    "title": "Assistant Research Scientist",
+    "flagged": false,
     "currentVisa": {
       "type": "Permanent Resident",
       "startDate": "2025-04-01T00:00:00.000Z",
@@ -3861,10 +3802,7 @@
         "initial h-1b start": null,
         "start date": "2025-04-01T00:00:00.000Z",
         "expiration date": "2028-03-31T00:00:00.000Z",
-        "prep extension date": {
-          "result": "2027-10-03T00:00:00.000Z",
-          "sharedFormula": "O101"
-        },
+        "prep extension date": "2027-10-03T00:00:00.000Z",
         "max h period": "2031-03-31T00:00:00.000Z",
         "document expiry i-94": null,
         "general notes": null,
