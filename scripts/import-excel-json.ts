@@ -85,7 +85,18 @@ async function main() {
     const firstName = (best && (best['first name'] || best['first']) ) || '';
     const lastName = (best && (best['last name'] || best['last']) ) || '';
     const umbcEmail = (best && (best['employee\'s umbc email'] || best['employee umbc email'] || best['email'])) || '';
-    const department = (best && (best['department'] || best['academic dept.'] || best['college'])) || '';
+    // Use last non-empty department across bucket rather than just most recent row
+    const department = (function pickDepartment() {
+      const deptKeys = ['department','academic dept.','college','dept','department name'];
+      for (let i = bucket.length - 1; i >= 0; i--) {
+        const row = bucket[i];
+        for (const dk of deptKeys) {
+          const v = row[dk];
+          if (v !== null && v !== undefined && String(v).trim() !== '') return v;
+        }
+      }
+      return '';
+    })();
     // Helper: find the last non-empty value in the bucket for a set of potential column keys
     function pickLast(bucketRows: any[], keys: string[]) {
       for (let i = bucketRows.length - 1; i >= 0; i--) {
@@ -132,7 +143,7 @@ async function main() {
       currentVisa.type = 'Permanent Resident';
     }
 
-    const titleVal = pickLast(bucket, ['title', 'position', 'job title']);
+    const titleVal = pickLast(bucket, ['employee title','title', 'position', 'job title']);
 
     out.push({
       id: id++,

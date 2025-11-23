@@ -57,7 +57,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="container">
+    <div className="container container-wide">
       <h1 className="h1">Dashboard</h1>
 
       {/* KPIs and table */}
@@ -74,26 +74,26 @@ export default function DashboardPage() {
           <div className="label">J-1 cases</div>
           <div className="value">{stats ? stats.j1 : '—'}</div>
         </div>
-          <div className="card kpi pad large-kpi">
-            <div className="label">H-1B cases</div>
-            <div className="value">{stats ? stats.h1 : '—'}</div>
-          </div>
-          <div className="card kpi pad large-kpi">
-            <div className="label">Permanent Residents</div>
-            <div className="value">{stats ? stats.pr : '—'}</div>
-          </div>
+        <div className="card kpi pad large-kpi">
+          <div className="label">H-1B cases</div>
+          <div className="value">{stats ? stats.h1 : '—'}</div>
+        </div>
+        <div className="card kpi pad large-kpi">
+          <div className="label">Permanent Residents</div>
+          <div className="value">{stats ? stats.pr : '—'}</div>
+        </div>
       </div>
 
       <section className="card section">
         <div className="titlebar">
           <div className="title">Amount of current cases</div>
-          <div className="help">{stats ? `${stats.expiringSoon} case(s)` : '—'}</div>
+          <div className="help highlight-counter">{stats ? `${stats.expiringSoon} case(s)` : '—'}</div>
         </div>
 
         <div className="table-wrap">
-          <table className="table">
+          <table className="table dash-table">
             <thead>
-              <tr><th>Name</th><th>Visa Type</th><th>Expiration</th><th>Due</th></tr>
+              <tr><th>Name</th><th>Visa Type</th><th>Expiration</th><th>Due</th><th>View</th></tr>
             </thead>
             <tbody>
               {expiring.map(e => {
@@ -116,9 +116,10 @@ export default function DashboardPage() {
                     <td>{name}</td>
                     <td>{visa?.type ? <span className="chip">{visa.type}</span> : '—'}</td>
                     <td>{exp ? exp.toLocaleDateString() : '—'}</td>
-                    <td style={{ backgroundColor: colors.bg, color: colors.fg, borderRadius: 6, padding: '6px 8px' }} className={exp && exp < new Date() ? 'due-neg' : ''}>
+                    <td style={{ backgroundColor: colors.bg, color: colors.fg, borderRadius: 6, padding: '6px 8px', fontWeight:500 }} className={exp && exp < new Date() ? 'due-neg' : ''}>
                       {due}
                     </td>
+                    <td><button className="btn-soft" onClick={()=>router.push(`/employees/${e.id}`)}>View</button></td>
                   </tr>
                 );
               })}

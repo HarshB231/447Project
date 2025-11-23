@@ -9,7 +9,8 @@
     "prisma:gen": "prisma generate",
     "db:push": "prisma db push",
     "import:excel": "ts-node scripts/import-excel.ts",
-    "db:reset": "rimraf prisma/dev.db && npm run db:push && npm run import:excel"
+    "db:reset": "rimraf prisma/dev.db && npm run db:push && npm run import:excel",
+    "import:excel:json": "ts-node scripts/import-excel-json.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
