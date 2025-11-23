@@ -17,6 +17,7 @@ export type Employee = {
   lastName?: string;
   umbcEmail?: string;
   department?: string;
+  title?: string;
   currentVisa?: Visa | null;
   rawRows?: any[];
 }

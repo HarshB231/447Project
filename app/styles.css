@@ -421,7 +421,8 @@ body {
 }
 
 .layout { display: flex; min-height: 100vh; background: var(--bg); }
-.sidebar { position: fixed; top:0; left:0; bottom:0; width: 240px; background: var(--brown); color: #ffffff; padding: 12px; border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+/* Sidebar widened so collapse toggle has breathing room */
+.sidebar { position: fixed; top:0; left:0; bottom:0; width: 300px; background: var(--brown); color: #ffffff; padding: 12px; border-right: 1px solid var(--line); display: flex; flex-direction: column; }
 .layout-collapsed .sidebar { width: 64px; }
 .sidebar-top { display: flex; align-items: center; justify-content: space-between; }
 .brand { font-size: 38px; font-weight: 900; letter-spacing: 0.5px; display:flex; align-items:center; gap:4px; font-family: 'UMBCTitle', 'Montserrat', 'Arial Black', ui-sans-serif; }
@@ -443,12 +444,12 @@ body {
 .layout-collapsed .sidebar-item .text { display: none; }
 .layout-collapsed .brand { display: none; }
 .sidebar button.sidebar-item { border: none; }
-.main { flex: 1; margin-left:240px; background: var(--bg); }
+.main { flex: 1; margin-left:300px; background: var(--bg); }
 .main.pattern-bg { position: relative; }
 .main.pattern-bg::before {
   content:"";
   position: fixed;
-  top:0; left:240px; right:0; bottom:0; /* start after sidebar */
+  top:0; left:300px; right:0; bottom:0; /* start after widened sidebar */
   background: url('/Background.png') repeat;
   background-size: 760px auto; /* enlarged pattern */
   filter: blur(2px) brightness(1.15);
