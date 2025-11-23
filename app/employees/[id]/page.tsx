@@ -168,14 +168,23 @@ export default function EmployeeDetail() {
                     {headers.map(h => {
                       const val = (rowsAll[rowIdx]||{})[h];
                       const display = showVal(val);
-                      const long = display === '?' || isLong(val) || /\S{35,}/.test(display); // treat '?' as expandable placeholder
-                      const truncated = long ? (display === '?' ? '?' : display.slice(0, 100) + '…') : display;
+                      const long = isLong(val) || /\S{35,}/.test(display); // only long content, ignore lone '?'
+                      let truncated = display;
+                      if (long && display !== '?') {
+                        // Show a readable snippet (~70 chars) ending at a word boundary when possible
+                        const limit = 70;
+                        if (display.length > limit) {
+                          const cut = display.slice(0, limit);
+                          const lastSpace = cut.lastIndexOf(' ');
+                          truncated = (lastSpace > 40 ? cut.slice(0, lastSpace) : cut).trim() + '…';
+                        }
+                      }
                       return (
                         <td key={h+rowIdx} style={{ maxWidth:260 }}>
                           {long ? (
                             <div className="cell-long">
                               <span>{truncated}</span>
-                              <button type="button" className="btn-soft btn-mini" onClick={()=> setExpandedCell({ key: h, value: display })}>View</button>
+                              <button type="button" className="btn-soft btn-view" onClick={()=> setExpandedCell({ key: h, value: display })}>View</button>
                             </div>
                           ) : (
                             display
