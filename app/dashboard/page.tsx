@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabaseClient";
@@ -59,14 +59,6 @@ export default function DashboardPage() {
   return (
     <div className="container">
       <h1 className="h1">Dashboard</h1>
-
-      <div className="segmented-wrap">
-        <div className="segmented">
-          <button className="segmented-item" onClick={handleLogout}>Back to Login</button>
-          <a className="segmented-item active" href="/dashboard">Dashboard</a>
-          <a className="segmented-item" href="/employees">Employees</a>
-        </div>
-      </div>
 
       {/* KPIs and table */}
       <div className="kpis">

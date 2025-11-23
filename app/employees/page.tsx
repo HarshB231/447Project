@@ -89,14 +89,6 @@ export default function Page() {
   return (
     <div className="container">
       <h1 className="h1">Employees & Scholars</h1>
-      {/* Segmented navigation */}
-      <div className="segmented-wrap">
-        <div className="segmented">
-          <button className="segmented-item" onClick={handleLogout}>Back to Login</button>
-          <a className="segmented-item" href="/dashboard">Dashboard</a>
-          <a className="segmented-item active" href="/employees">Employees</a>
-        </div>
-      </div>
 
       {/* Search row: make Search a soft, popping button */}
       <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>

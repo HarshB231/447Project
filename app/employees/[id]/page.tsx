@@ -67,14 +67,7 @@ export default function EmployeeDetail() {
     <div className="container">
       <h1 className="h1">Employee Details</h1>
 
-      {/* Segmented navigation */}
-      <div className="segmented-wrap">
-        <div className="segmented">
-          <button className="segmented-item" onClick={handleLogout}>Back to Login</button>
-          <a className="segmented-item" href="/dashboard">Dashboard</a>
-          <a className="segmented-item" href="/employees">Employees</a>
-        </div>
-      </div>
+      
 
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12 }}>
         <div className="card employee-detail-card" style={{ borderRadius: 12, maxWidth: '95vw', width: '100%' }}>
