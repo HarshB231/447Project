@@ -24,8 +24,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }
 
   async function handleLogout() {
-    await supabase.auth.signOut();
-    router.replace('/');
+    if (!supabase) {
+      router.replace('/');
+      return;
+    }
+    try {
+      await supabase.auth.signOut();
+    } catch (e) {
+      console.warn('Sign out skipped (supabase not configured).');
+    } finally {
+      router.replace('/');
+    }
   }
 
   const IconHome = () => (
