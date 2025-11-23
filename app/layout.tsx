@@ -59,7 +59,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className={`layout ${collapsed ? 'layout-collapsed' : ''}`}>
             <aside className="sidebar">
               <div className="sidebar-top">
-                <div className="brand">VMS</div>
+                <div className="brand">
+                  <span className="brand-part vms">VMS</span><span className="brand-part umbc">UMBC</span>
+                </div>
                 <button className="sidebar-toggle" onClick={toggleSidebar}>{collapsed ? '›' : '‹'}</button>
               </div>
               <nav className="sidebar-nav">
@@ -71,16 +73,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 ))}
               </nav>
               <div className="sidebar-bottom">
+                <div className="sidebar-logo">
+                  <img src="/UMBCLogo.png" alt="UMBC Logo" />
+                </div>
                 <button className="sidebar-item" onClick={handleLogout}>
                   <span className="icon"><IconLogout /></span>
                   <span className="text">Back to Login</span>
                 </button>
               </div>
             </aside>
-            <main className="main">{children}</main>
+            <main className="main pattern-bg">{children}</main>
           </div>
         ) : (
-          <main className="main">{children}</main>
+          <main className="main pattern-bg">{children}</main>
         )}
       </body>
     </html>

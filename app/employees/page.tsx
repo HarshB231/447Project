@@ -87,21 +87,21 @@ export default function Page() {
   }, [employees, q, visaFilter]);
 
   return (
-    <div className="container">
+    <div className="container container-wide">
       <h1 className="h1">Employees & Scholars</h1>
 
       {/* Search row: make Search a soft, popping button */}
-      <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
-        <input className="input" placeholder="Search name..." value={q} onChange={(e) => setQ(e.target.value)} />
-        <input className="input" placeholder="Visa type" value={visaFilter} onChange={(e) => setVisaFilter(e.target.value)} />
-        <button className="btn-soft" onClick={load}>Search</button>
+      <div style={{ display: "flex", gap: 16, marginBottom: 16 }}>
+        <input className="input big-search-input" placeholder="Search name..." value={q} onChange={(e) => setQ(e.target.value)} />
+        <input className="input big-search-input" placeholder="Visa type" value={visaFilter} onChange={(e) => setVisaFilter(e.target.value)} />
+        <button className="btn-soft big-search-btn" onClick={load}>Search</button>
       </div>
 
       {/* Table section */}
       <div className="card section">
         <div className="titlebar">
           <div className="title">Employees & Scholars</div>
-          <div className="help">{filteredEmployees.length} shown</div>
+          <div className="help highlight-counter">{filteredEmployees.length} shown</div>
         </div>
 
         <div style={{ overflowX: 'auto' }}>
