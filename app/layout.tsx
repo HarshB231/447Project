@@ -94,7 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main className="main pattern-bg">{children}</main>
           </div>
         ) : (
-          <main className="main pattern-bg">{children}</main>
+          <main className="main main-noside pattern-bg">{children}</main>
         )}
       </body>
     </html>
