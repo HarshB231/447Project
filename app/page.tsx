@@ -26,7 +26,7 @@ export default function Page() {
 
   async function handleSignOut() {
     setLoading(true);
-    await supabase.auth.signOut();
+    await supabase?.auth.signOut();
     setLoading(false);
     setHasSession(false);
     setMode("signin");
@@ -41,14 +41,14 @@ export default function Page() {
     setLoading(true);
     try {
       if (mode === "signin") {
-        const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+        const { error: signInError } = await (supabase?.auth.signInWithPassword({ email, password }) || { error: new Error('Auth client unavailable') });
         if (signInError) throw signInError;
-        router.replace("/dashboard");
+        setHasSession(true);
       } else {
-        const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
+        const { data, error: signUpError } = await (supabase?.auth.signUp({ email, password }) || { data: {}, error: new Error('Auth client unavailable') });
         if (signUpError) throw signUpError;
         if (data.session) {
-          router.replace("/dashboard");
+          setHasSession(true);
         } else {
           setNotice("Signup successful. Check your email to confirm.");
         }
