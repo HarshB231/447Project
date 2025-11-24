@@ -15,6 +15,10 @@ export default function EmployeeDetail() {
   const [sortNewestFirst, setSortNewestFirst] = useState(true);
   const [rowsMenuOpen, setRowsMenuOpen] = useState(false);
   const [expandedCell, setExpandedCell] = useState<{ key: string; value: string } | null>(null);
+  const [editMode, setEditMode] = useState(false);
+  const [editedValues, setEditedValues] = useState<Record<string,string>>({});
+  const [saving, setSaving] = useState(false);
+  const [actorEmail, setActorEmail] = useState<string|undefined>(undefined);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -33,6 +37,13 @@ export default function EmployeeDetail() {
       })
       .catch(console.error)
       .finally(() => setLoading(false));
+    // fetch session for actor email
+    if (supabase) {
+      supabase.auth.getSession().then(({ data }) => {
+        const em = data?.session?.user?.email;
+        if (em) setActorEmail(em);
+      }).catch(()=>{});
+    }
   }, [id]);
 
   async function toggleFlag() {
@@ -105,6 +116,54 @@ export default function EmployeeDetail() {
     setSortNewestFirst(newest);
     setSelectedRows(sorted);
   }
+
+  function beginEdit(rowIdx:number){
+    setActiveRowIndex(rowIdx);
+    const row = rowsAll[rowIdx] || {};
+    const initial: Record<string,string> = {};
+    for (const h of headers) initial[h] = showVal(row[h]) === '—' ? '' : String(row[h]);
+    setEditedValues(initial);
+    setEditMode(true);
+  }
+
+  function cancelEdit(){
+    setEditMode(false);
+    setEditedValues({});
+  }
+
+  async function saveEdit(){
+    if (!editMode) return;
+    setSaving(true);
+    try {
+      const rowOriginal = rowsAll[activeRowIndex] || {};
+      const updates: Record<string, any> = {};
+      for (const [k,v] of Object.entries(editedValues)) {
+        const orig = showVal(rowOriginal[k]) === '—' ? '' : String(rowOriginal[k] ?? '');
+        if (orig !== v) updates[k] = v === '' ? null : v; // allow clearing
+      }
+      if (Object.keys(updates).length === 0) {
+        setEditMode(false);
+        return;
+      }
+      await fetch(`/api/employees/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          actor: actorEmail,
+          editRawRow: { rowIndex: activeRowIndex, updates, actor: actorEmail },
+        })
+      });
+      const r = await fetch(`/api/employees/${id}`);
+      setEmployee(await r.json());
+      setEditMode(false);
+      setEditedValues({});
+    } catch (e) {
+      console.error(e);
+      alert('Failed to save changes');
+    } finally {
+      setSaving(false);
+    }
+  }
   return (
     <div className="employee-detail-wide">
       <div style={{ display:'flex', alignItems:'center', gap:20, marginBottom:8 }}>
@@ -168,10 +227,24 @@ export default function EmployeeDetail() {
                     {headers.map(h => {
                       const val = (rowsAll[rowIdx]||{})[h];
                       const display = showVal(val);
-                      const long = isLong(val) || /\S{35,}/.test(display); // only long content, ignore lone '?'
+                      const long = isLong(val) || /\S{35,}/.test(display);
+                      if (editMode && rowIdx === activeRowIndex) {
+                        const currentVal = editedValues[h] ?? '';
+                        const InputTag = long ? 'textarea' : 'input';
+                        return (
+                          <td key={h+rowIdx} style={{ maxWidth:260 }}>
+                            <InputTag
+                              value={currentVal}
+                              onChange={(e:any)=> setEditedValues(ev=> ({ ...ev, [h]: e.target.value }))}
+                              className="input"
+                              style={{ width:'100%', fontSize:14, minHeight: long? 60: undefined, resize: long? 'vertical': 'none' }}
+                              placeholder={h}
+                            />
+                          </td>
+                        );
+                      }
                       let truncated = display;
                       if (long && display !== '?') {
-                        // Show a readable snippet (~70 chars) ending at a word boundary when possible
                         const limit = 70;
                         if (display.length > limit) {
                           const cut = display.slice(0, limit);
@@ -185,9 +258,17 @@ export default function EmployeeDetail() {
                             <div className="cell-long">
                               <span>{truncated}</span>
                               <button type="button" className="btn-soft btn-view" onClick={()=> setExpandedCell({ key: h, value: display })}>View</button>
+                              {!editMode && rowIdx === activeRowIndex && (
+                                <button type="button" className="btn-soft btn-mini" onClick={()=> beginEdit(rowIdx)} style={{ marginLeft:6 }}>Edit</button>
+                              )}
                             </div>
                           ) : (
-                            display
+                            <>
+                              {display}
+                              {!editMode && rowIdx === activeRowIndex && (
+                                <button type="button" className="btn-soft btn-mini" onClick={()=> beginEdit(rowIdx)} style={{ marginLeft:6 }}>Edit</button>
+                              )}
+                            </>
                           )}
                         </td>
                       );
@@ -197,6 +278,12 @@ export default function EmployeeDetail() {
               </tbody>
             </table>
           </div>
+          {editMode && (
+            <div style={{ marginTop:16, display:'flex', gap:12 }}>
+              <button className="btn btn-flag" disabled={saving} onClick={saveEdit} style={{ minWidth:140 }}>{saving? 'Saving…':'Save Changes'}</button>
+              <button className="btn-soft" disabled={saving} onClick={cancelEdit} style={{ minWidth:100 }}>Cancel</button>
+            </div>
+          )}
         </div>
       </div>
 

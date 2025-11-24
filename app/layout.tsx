@@ -54,11 +54,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v7h7"/><path d="M21 21v-7h-7"/><path d="M3 10a12 12 0 0 1 12-12v0"/><path d="M21 14a12 12 0 0 1-12 12v0"/></svg>
   );
 
+  const IconImportExport = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M12 21V9"/><path d="M16 13l-4-4-4 4"/></svg>
+  );
+
   const nav = [
     { href: '/dashboard', label: 'Dashboard', icon: <IconHome /> },
     { href: '/employees', label: 'Employees', icon: <IconUsers /> },
     { href: '/report-assist', label: 'Report Assist', icon: <IconReport /> },
     { href: '/audit-log', label: 'Audit Log', icon: <IconAudit /> },
+    { href: '/import-export', label: 'Import/Export', icon: <IconImportExport /> },
   ];
 
   return (
