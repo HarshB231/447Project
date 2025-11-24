@@ -3,6 +3,18 @@ import path from 'path';
 
 const DATA_DIR = path.resolve(process.cwd(), 'data');
 const EMP_FILE = path.join(DATA_DIR, 'employees.json');
+const AUDIT_FILE = path.join(DATA_DIR, 'audit-log.json');
+
+export type AuditChange = { key: string; before: any; after: any; rowIndex?: number };
+export type AuditEntry = {
+  id: number;
+  ts: string;
+  actor?: string;
+  type: string; // e.g. EDIT_CELL, IMPORT, EXPORT
+  employeeId?: number;
+  changes?: AuditChange[];
+  note?: string;
+};
 
 export type Visa = {
   type?: string;
@@ -24,6 +36,7 @@ export type Employee = {
 
 export function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  if (!fs.existsSync(AUDIT_FILE)) fs.writeFileSync(AUDIT_FILE, '[]', { encoding: 'utf8' });
 }
 
 export function readEmployeesSync(): Employee[] {
@@ -44,6 +57,25 @@ export async function readEmployees(): Promise<Employee[]> {
 export function writeEmployeesSync(items: Employee[]) {
   ensureDataDir();
   fs.writeFileSync(EMP_FILE, JSON.stringify(items, null, 2), { encoding: 'utf8' });
+}
+
+export function readAuditLogSync(): AuditEntry[] {
+  try {
+    ensureDataDir();
+    if (!fs.existsSync(AUDIT_FILE)) return [];
+    return JSON.parse(fs.readFileSync(AUDIT_FILE, 'utf8')) as AuditEntry[];
+  } catch (err) {
+    console.error('readAuditLogSync failed', err);
+    return [];
+  }
+}
+
+export function appendAudit(entry: Omit<AuditEntry, 'id' | 'ts'> & { ts?: string }) {
+  const list = readAuditLogSync();
+  const full: AuditEntry = { id: Date.now(), ts: entry.ts || new Date().toISOString(), ...entry } as AuditEntry;
+  list.push(full);
+  fs.writeFileSync(AUDIT_FILE, JSON.stringify(list, null, 2), 'utf8');
+  return full;
 }
 
 export function computeStats(items: Employee[]) {
@@ -85,4 +117,6 @@ export default {
   readEmployees,
   writeEmployeesSync,
   computeStats,
+  readAuditLogSync,
+  appendAudit,
 };
