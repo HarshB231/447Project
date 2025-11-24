@@ -20,6 +20,7 @@ export default function EmployeeDetail() {
   const [saving, setSaving] = useState(false);
   const [actorEmail, setActorEmail] = useState<string|undefined>(undefined);
   const [loading, setLoading] = useState(false);
+  const [editingCell, setEditingCell] = useState<{ key: string; original: string } | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -126,6 +127,16 @@ export default function EmployeeDetail() {
     setEditMode(true);
   }
 
+  function beginEditRowCell(rowIdx:number, key:string){
+    const row = rowsAll[rowIdx] || {};
+    const initial: Record<string,string> = {};
+    for (const h of headers) initial[h] = showVal(row[h]) === '—' ? '' : String(row[h]);
+    setActiveRowIndex(rowIdx);
+    setEditedValues(initial);
+    setEditMode(true);
+    setEditingCell({ key, original: initial[key] ?? '' });
+  }
+
   function cancelEdit(){
     setEditMode(false);
     setEditedValues({});
@@ -176,10 +187,18 @@ export default function EmployeeDetail() {
             <h2 style={{ margin:'0 0 8px' }}>{[employee.firstName, employee.lastName].filter(Boolean).join(' ')}</h2>
             <div className="detail-meta">{employee.umbcEmail} • {employee.department || ''} {employee.title ? '• ' + employee.title : ''}</div>
           </div>
-          <div style={{ display:'flex', gap:12 }}>
+          <div style={{ display:'flex', gap:12, flexDirection:'column' }}>
             <button onClick={toggleFlag} className={`btn ${employee.flagged ? 'btn-unflag' : 'btn-flag'}`} style={{ minWidth:140 }}>
               {employee.flagged ? 'UNFLAG' : 'FLAG'}
             </button>
+            {!editMode ? (
+              <button className="btn-soft" onClick={()=> beginEdit((selectedRows[0] ?? activeRowIndex))} style={{ minWidth:140 }}>Enter Edit Mode</button>
+            ) : (
+              <div style={{ display:'flex', gap:8 }}>
+                <button className="btn btn-flag" disabled={saving} onClick={saveEdit} style={{ minWidth:140 }}>{saving? 'Saving…':'Save Changes'}</button>
+                <button className="btn-soft" disabled={saving} onClick={cancelEdit} style={{ minWidth:100 }}>Cancel</button>
+              </div>
+            )}
           </div>
         </div>
         <div style={{ padding:'0 24px 32px' }}>
@@ -240,6 +259,42 @@ export default function EmployeeDetail() {
                               style={{ width:'100%', fontSize:14, minHeight: long? 60: undefined, resize: long? 'vertical': 'none' }}
                               placeholder={h}
                             />
+                            <div style={{ marginTop:6, display:'flex', justifyContent:'flex-end' }}>
+                              <button
+                                type="button"
+                                className="btn-soft btn-mini"
+                                onClick={()=> setEditingCell({ key: h, original: currentVal })}
+                                style={{ fontSize:11 }}
+                              >Edit</button>
+                            </div>
+                          </td>
+                        );
+                      }
+                      if (editMode && rowIdx !== activeRowIndex) {
+                        const displayForEdit = display;
+                        let truncatedForEdit = displayForEdit;
+                        if (long && displayForEdit !== '?') {
+                          const limit = 70;
+                          if (displayForEdit.length > limit) {
+                            const cut = displayForEdit.slice(0, limit);
+                            const lastSpace = cut.lastIndexOf(' ');
+                            truncatedForEdit = (lastSpace > 40 ? cut.slice(0, lastSpace) : cut).trim() + '…';
+                          }
+                        }
+                        return (
+                          <td key={h+rowIdx} style={{ maxWidth:260 }}>
+                            <div className="cell-long">
+                              <span>{long ? truncatedForEdit : displayForEdit}</span>
+                              {long && (
+                                <button type="button" className="btn-soft btn-view" onClick={()=> setExpandedCell({ key: h, value: display })}>View</button>
+                              )}
+                              <button
+                                type="button"
+                                className="btn-soft btn-mini"
+                                onClick={()=> beginEditRowCell(rowIdx, h)}
+                                style={{ fontSize:11 }}
+                              >Edit</button>
+                            </div>
                           </td>
                         );
                       }
@@ -258,17 +313,9 @@ export default function EmployeeDetail() {
                             <div className="cell-long">
                               <span>{truncated}</span>
                               <button type="button" className="btn-soft btn-view" onClick={()=> setExpandedCell({ key: h, value: display })}>View</button>
-                              {!editMode && rowIdx === activeRowIndex && (
-                                <button type="button" className="btn-soft btn-mini" onClick={()=> beginEdit(rowIdx)} style={{ marginLeft:6 }}>Edit</button>
-                              )}
                             </div>
                           ) : (
-                            <>
-                              {display}
-                              {!editMode && rowIdx === activeRowIndex && (
-                                <button type="button" className="btn-soft btn-mini" onClick={()=> beginEdit(rowIdx)} style={{ marginLeft:6 }}>Edit</button>
-                              )}
-                            </>
+                            display
                           )}
                         </td>
                       );
@@ -278,12 +325,7 @@ export default function EmployeeDetail() {
               </tbody>
             </table>
           </div>
-          {editMode && (
-            <div style={{ marginTop:16, display:'flex', gap:12 }}>
-              <button className="btn btn-flag" disabled={saving} onClick={saveEdit} style={{ minWidth:140 }}>{saving? 'Saving…':'Save Changes'}</button>
-              <button className="btn-soft" disabled={saving} onClick={cancelEdit} style={{ minWidth:100 }}>Cancel</button>
-            </div>
-          )}
+          {/* Save/Cancel controls moved next to FLAG/Enter Edit to keep header tidy */}
         </div>
       </div>
 
@@ -332,6 +374,37 @@ export default function EmployeeDetail() {
               <button className="btn-soft btn-mini" onClick={()=> setExpandedCell(null)}>Close</button>
             </div>
             <div style={{ whiteSpace:'pre-wrap', lineHeight:1.5, fontSize:15 }}>{expandedCell.value}</div>
+          </div>
+        </>
+      )}
+      {editingCell && editMode && (
+        <>
+          <div className="modal-backdrop" onClick={()=> setEditingCell(null)} />
+          <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-edit-title">
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:8 }}>
+              <h2 id="modal-edit-title" className="modal-title">Edit: {editingCell.key}</h2>
+              <button className="btn-soft btn-mini" onClick={()=> {
+                // revert changes if user cancels
+                setEditedValues(ev => ({ ...ev, [editingCell.key]: editingCell.original }));
+                setEditingCell(null);
+              }}>Cancel</button>
+            </div>
+            <textarea
+              value={editedValues[editingCell.key] ?? ''}
+              onChange={(e)=> setEditedValues(ev=> ({ ...ev, [editingCell.key]: e.target.value }))}
+              className="input"
+              rows={14}
+              style={{ width:'100%', resize:'vertical', fontSize:14, lineHeight:1.5 }}
+              placeholder={editingCell.key}
+            />
+            <div style={{ marginTop:12, display:'flex', justifyContent:'flex-end', gap:8 }}>
+              <button
+                type="button"
+                className="btn btn-flag"
+                onClick={()=> setEditingCell(null)}
+                style={{ minWidth:120 }}
+              >Done</button>
+            </div>
           </div>
         </>
       )}
