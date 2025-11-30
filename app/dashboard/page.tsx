@@ -13,9 +13,9 @@ export default function DashboardPage() {
 
   // Auth guard: if not logged in, go to login
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
+    supabase?.auth.getSession().then(({ data }) => {
       if (!data.session) router.replace("/");
-    });
+    }).catch(() => router.replace("/"));
   }, [router]);
 
   // Load stats and employees
@@ -25,7 +25,7 @@ export default function DashboardPage() {
   }, []);
 
   async function handleLogout() {
-    await supabase.auth.signOut();
+    try { await supabase?.auth.signOut(); } catch {}
     router.replace("/");
   }
 
