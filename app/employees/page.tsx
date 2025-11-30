@@ -27,9 +27,9 @@ export default function Page() {
 
   // redirect to login if no session
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
+    supabase?.auth.getSession().then(({ data }) => {
       if (!data.session) router.replace("/");
-    });
+    }).catch(() => router.replace("/"));
   }, [router]);
 
   async function load() {
@@ -60,9 +60,7 @@ export default function Page() {
   }, []);
 
   async function handleLogout() {
-    if (supabase) {
-      await supabase.auth.signOut();
-    }
+    try { await supabase?.auth.signOut(); } catch {}
     router.replace("/");
   }
 
