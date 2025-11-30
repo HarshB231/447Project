@@ -56,7 +56,7 @@ export async function GET(req: Request) {
   });
 
   // sort so flagged employees appear first, then by days left ascending
-  enriched.sort((a, b) => {
+  enriched.sort((a: any, b: any) => {
     const fa = (a as any).flagged ? 0 : 1;
     const fb = (b as any).flagged ? 0 : 1;
     if (fa !== fb) return fa - fb;
