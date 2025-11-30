@@ -36,7 +36,7 @@ export default function Page() {
     // Backend still returns all; filtering client-side by searchType
     const res = await fetch(`/api/employees`);
     const data = await res.json();
-    setEmployees(data);
+    setEmployees(Array.isArray(data) ? data : []);
   }
 
   async function toggleFlag(id: number, current: boolean) {
@@ -65,6 +65,7 @@ export default function Page() {
   }
 
   function computeFiltered(list: EmployeeSummary[], query: string, mode: 'name'|'visa'|'department') {
+    if (!Array.isArray(list)) return [] as EmployeeSummary[];
     const norm = (s?: string) => (s || '').toLowerCase();
     const qn = norm(query);
     return list.filter((e) => {
