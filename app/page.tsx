@@ -16,9 +16,13 @@ export default function Page() {
 
   useEffect(() => {
     let active = true;
-    supabase.auth.getSession().then(({ data }) => {
+    supabase?.auth.getSession().then(({ data }) => {
       if (!active) return;
       setHasSession(!!data.session);
+      setSessionChecked(true);
+    }).catch(() => {
+      if (!active) return;
+      setHasSession(false);
       setSessionChecked(true);
     });
     return () => { active = false; };
