@@ -16,6 +16,23 @@ How to Run
 ------------------------------------
 (Instructions will be added once the application has a runnable build)  
 
+Deployment
+------------------------------------
+- Vercel builds a specific Git repo + branch. Ensure your project is linked to `HarshB231/447Project` (Project → Settings → Git). Push changes to `main` and Redeploy.
+- Environment variables (Project → Settings → Environment Variables):
+	- `NEXT_PUBLIC_SUPABASE_URL`
+	- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+	- Optional server-only: `SUPABASE_SERVICE_ROLE_KEY` (never expose client-side)
+- Supabase dynamic dependency warnings shown in build logs are non-blocking and expected from Supabase SDK bundling.
+- Supabase Schema: see `supabase/schema.sql`. Run in Supabase SQL Editor to create tables: `employees`, `visas`, `notes`, `audit_log`, plus a view for current visa and RLS policies.
+
+Testing Checklist
+------------------------------------
+- Employees API responds with data from Supabase.
+- Flag updates persist and create `audit_log` entries.
+- Import writes employees/visas/notes to Supabase.
+- Export reads from Supabase and returns an Excel file.
+
 ------------------------------------
 How does it work?
 ------------------------------------

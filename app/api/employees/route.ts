@@ -1,5 +1,5 @@
 ﻿import { NextResponse } from "next/server";
-import data from "../../../lib/data";
+import { getSupabaseServerClient } from "../../../lib/supabaseServer";
 
 function isPRType(type?: string) {
   if (!type) return false;
@@ -8,19 +8,51 @@ function isPRType(type?: string) {
 }
 
 export async function GET(req: Request) {
-  const items = await data.readEmployees();
+  const supabase = getSupabaseServerClient();
+  if (!supabase) return NextResponse.json([], { status: 200 });
+  const { data: employees, error: empErr } = await supabase
+    .from("employees")
+    .select("id, first_name, last_name, umbc_email, department, title, flagged")
+    .limit(1000);
+  if (empErr) return NextResponse.json({ error: empErr.message }, { status: 500 });
+
+  // join latest visa per employee
+  const { data: visas, error: visaErr } = await supabase
+    .from("visas")
+    .select("employee_id, type, end_date")
+    .order("end_date", { ascending: false })
+    .limit(5000);
+  if (visaErr) return NextResponse.json({ error: visaErr.message }, { status: 500 });
+
+  const latestVisaByEmp = new Map<number, any>();
+  for (const v of visas || []) {
+    const id = (v as any).employee_id as number;
+    if (!latestVisaByEmp.has(id)) latestVisaByEmp.set(id, v);
+  }
   // compute sortable key: days until expiration (PR or missing -> large number to push bottom)
   const now = new Date();
-  const enriched = items.map(it => {
-    const end = it.currentVisa?.endDate ? new Date(it.currentVisa.endDate) : null;
-    const isPr = isPRType(it.currentVisa?.type);
+  const enriched = (employees || []).map((e: any) => {
+    const visa = latestVisaByEmp.get(e.id) || null;
+    const end = visa?.end_date ? new Date(visa.end_date) : null;
+    const isPr = isPRType(visa?.type);
     let days = Number.MAX_SAFE_INTEGER;
     if (end && !isNaN(end.getTime())) {
       days = Math.ceil((end.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
     }
-    // expose a visas array for the employees page and preserve department/title/flagged
-    const visas = it.currentVisa ? [{ type: it.currentVisa.type }] : [];
-    return { ...it, visas, currentVisa: it.currentVisa, __daysLeft: days, __isPr: isPr };
+    const visasArr = visa?.type ? [{ type: visa.type }] : [];
+    return {
+      id: e.id,
+      firstName: e.first_name,
+      lastName: e.last_name,
+      umbcEmail: e.umbc_email,
+      department: e.department,
+      title: e.title,
+      flagged: e.flagged,
+      currentVisa: visa ? { type: visa.type, endDate: visa.end_date } : null,
+      visas: visasArr,
+      __daysLeft: days,
+      __isPr: isPr,
+    };
   });
 
   // sort so flagged employees appear first, then by days left ascending
