@@ -15,6 +15,12 @@ export async function POST(req: Request) {
     if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
     fs.writeFileSync(EMP_FILE, '[]', 'utf8');
     fs.writeFileSync(AUDIT_FILE, '[]', 'utf8');
+    // Clear imported flag so app shows empty state until next import
+    try {
+      const DATA_DIR_LOCAL = DATA_DIR; // use same dir
+      const flag = path.join(DATA_DIR_LOCAL, '.imported');
+      if (fs.existsSync(flag)) fs.rmSync(flag);
+    } catch {}
     // After reset, record the action in brand-new audit file (which was cleared)
     // This will be the first entry post-reset
     try {

@@ -20,9 +20,23 @@ export default function ImportExportPage() {
     const res = await fetch('/api/export');
     if (!res.ok) { alert('Export failed'); return; }
     const blob = await res.blob();
+    // Prefer server-provided filename; fallback to dated name
+    let fname = 'employees-export.xlsx';
+    const dispo = res.headers.get('content-disposition');
+    if (dispo) {
+      const m = /filename\*=UTF-8''([^;]+)|filename="?([^";]+)"?/i.exec(dispo);
+      const picked = decodeURIComponent((m?.[1] || m?.[2] || '').trim());
+      if (picked) fname = picked;
+    } else {
+      const now = new Date();
+      const mm = String(now.getMonth()+1).padStart(2,'0');
+      const dd = String(now.getDate()).padStart(2,'0');
+      const yyyy = String(now.getFullYear());
+      fname = `employees-export-${mm}-${dd}-${yyyy}.xlsx`;
+    }
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = 'employees-export.xlsx'; a.click();
+    a.href = url; a.download = fname; a.click();
     URL.revokeObjectURL(url);
   }
 

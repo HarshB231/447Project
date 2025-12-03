@@ -5,13 +5,15 @@ export async function POST(req: Request) {
   const body = await req.json();
   const employeeId = Number(body.employeeId);
   const content = String(body.content || '').trim();
+  const rowIndex = typeof body.rowIndex === 'number' ? body.rowIndex : undefined;
+  const startDate = body.startDate ? String(body.startDate) : undefined;
   if (!employeeId || !content) return NextResponse.json({ error: 'invalid' }, { status: 400 });
 
   const items = data.readEmployeesSync();
   const idx = items.findIndex(e => Number(e.id) === employeeId);
   if (idx === -1) return NextResponse.json({ error: 'employee not found' }, { status: 404 });
 
-  const note = { id: Date.now(), content, createdAt: new Date().toISOString() };
+  const note = { id: Date.now(), content, createdAt: new Date().toISOString(), rowIndex, startDate };
   (items[idx] as any).notes = (items[idx] as any).notes || [];
   (items[idx] as any).notes.push(note);
   data.writeEmployeesSync(items);
