@@ -158,5 +158,237 @@
       }
     ],
     "note": "Imported file Case tracking for CS class.xlsx"
+  },
+  {
+    "id": 1764782650914,
+    "ts": "2025-12-03T17:24:10.914Z",
+    "type": "EDIT_CELL",
+    "employeeId": 1764749525564,
+    "changes": [
+      {
+        "key": "flagged",
+        "before": true,
+        "after": false
+      }
+    ]
+  },
+  {
+    "id": 1764786343194,
+    "ts": "2025-12-03T18:25:43.194Z",
+    "type": "IMPORT",
+    "changes": [
+      {
+        "key": "rowsReplaced",
+        "before": null,
+        "after": 0
+      },
+      {
+        "key": "employeesCreated",
+        "before": null,
+        "after": 48
+      }
+    ],
+    "note": "Imported file Case_Tracking_TestData_MULTIROW_LOGICAL_CASES_SIMPLE_DATES_NOTES.xlsx"
+  },
+  {
+    "id": 1764786488481,
+    "ts": "2025-12-03T18:28:08.481Z",
+    "type": "EDIT_CELL",
+    "actor": "gandriepagudar@gmail.com",
+    "employeeId": 1764786343989,
+    "changes": [
+      {
+        "key": "Dependents",
+        "before": 3,
+        "after": "4",
+        "rowIndex": 0
+      }
+    ]
+  },
+  {
+    "id": 1764787006861,
+    "ts": "2025-12-03T18:36:46.861Z",
+    "type": "EDIT_CELL",
+    "actor": "gandriepagudar@gmail.com",
+    "employeeId": 1764786343989,
+    "changes": [
+      {
+        "key": "Country of Birth",
+        "before": "Japan",
+        "after": "Philippines",
+        "rowIndex": 0
+      }
+    ]
+  },
+  {
+    "id": 1764787821137,
+    "ts": "2025-12-03T18:50:21.137Z",
+    "type": "IMPORT",
+    "changes": [
+      {
+        "key": "rowsReplaced",
+        "before": null,
+        "after": 0
+      },
+      {
+        "key": "employeesCreated",
+        "before": null,
+        "after": 46
+      }
+    ],
+    "note": "Imported file Case tracking for CS class.xlsx",
+    "actor": "gandriepagudar@gmail.com"
+  },
+  {
+    "id": 1764789955524,
+    "ts": "2025-12-03T19:25:55.524Z",
+    "type": "IMPORT",
+    "changes": [
+      {
+        "key": "rowsReplaced",
+        "before": null,
+        "after": 0
+      },
+      {
+        "key": "employeesCreated",
+        "before": null,
+        "after": 48
+      }
+    ],
+    "note": "Imported file Case_Tracking_TestData_MULTIROW_LOGICAL_CASES_SIMPLE_DATES_NOTES.xlsx",
+    "actor": "gandriepagudar@gmail.com"
+  },
+  {
+    "id": 1764790121212,
+    "ts": "2025-12-03T19:28:41.212Z",
+    "type": "IMPORT",
+    "changes": [
+      {
+        "key": "rowsReplaced",
+        "before": null,
+        "after": 0
+      },
+      {
+        "key": "employeesCreated",
+        "before": null,
+        "after": 46
+      }
+    ],
+    "note": "Imported file Case tracking for CS class.xlsx",
+    "actor": "gandriepagudar@gmail.com"
+  },
+  {
+    "id": 1764790910181,
+    "ts": "2025-12-03T19:41:50.181Z",
+    "type": "IMPORT",
+    "changes": [
+      {
+        "key": "rowsReplaced",
+        "before": null,
+        "after": 0
+      },
+      {
+        "key": "employeesCreated",
+        "before": null,
+        "after": 48
+      }
+    ],
+    "note": "Imported file Case_Tracking_TestData_MULTIROW_LOGICAL_CASES_SIMPLE_DATES_NOTES.xlsx",
+    "actor": "gandriepagudar@gmail.com"
+  },
+  {
+    "id": 1764791052566,
+    "ts": "2025-12-03T19:44:12.566Z",
+    "type": "IMPORT",
+    "changes": [
+      {
+        "key": "rowsReplaced",
+        "before": null,
+        "after": 0
+      },
+      {
+        "key": "employeesCreated",
+        "before": null,
+        "after": 46
+      }
+    ],
+    "note": "Imported file Case tracking for CS class.xlsx",
+    "actor": "gandriepagudar@gmail.com"
+  },
+  {
+    "id": 1764791342175,
+    "ts": "2025-12-03T19:49:02.175Z",
+    "type": "IMPORT",
+    "changes": [
+      {
+        "key": "rowsReplaced",
+        "before": null,
+        "after": 0
+      },
+      {
+        "key": "employeesCreated",
+        "before": null,
+        "after": 46
+      }
+    ],
+    "note": "Imported file employees-export (7).xlsx",
+    "actor": "gandriepagudar@gmail.com"
+  },
+  {
+    "id": 1764791361127,
+    "ts": "2025-12-03T19:49:21.127Z",
+    "type": "IMPORT",
+    "changes": [
+      {
+        "key": "rowsReplaced",
+        "before": null,
+        "after": 0
+      },
+      {
+        "key": "employeesCreated",
+        "before": null,
+        "after": 48
+      }
+    ],
+    "note": "Imported file Case_Tracking_TestData_MULTIROW_LOGICAL_CASES_SIMPLE_DATES_NOTES.xlsx",
+    "actor": "gandriepagudar@gmail.com"
+  },
+  {
+    "id": 1764791895055,
+    "ts": "2025-12-03T19:58:15.055Z",
+    "type": "IMPORT",
+    "changes": [
+      {
+        "key": "rowsReplaced",
+        "before": null,
+        "after": 0
+      },
+      {
+        "key": "employeesCreated",
+        "before": null,
+        "after": 46
+      }
+    ],
+    "note": "Imported file employees-export_filled_for_testing (1).xlsx",
+    "actor": "gandriepagudar@gmail.com"
+  },
+  {
+    "id": 1764792312557,
+    "ts": "2025-12-03T20:05:12.557Z",
+    "type": "IMPORT",
+    "changes": [
+      {
+        "key": "rowsReplaced",
+        "before": null,
+        "after": 0
+      },
+      {
+        "key": "employeesCreated",
+        "before": null,
+        "after": 100
+      }
+    ],
+    "note": "Imported file employees-100_filled_for_testing.xlsx",
+    "actor": "gandriepagudar@gmail.com"
   }
 ]

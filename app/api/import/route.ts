@@ -9,6 +9,7 @@ export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const file = formData.get('file');
+    const actor = formData.get('actor');
     if (!(file instanceof File)) {
       return NextResponse.json({ error: 'file missing' }, { status: 400 });
     }
@@ -61,11 +62,9 @@ export async function POST(req: Request) {
       newRawRows.push(obj);
     }
 
-    // Simple merge strategy: replace existing rawRows for matching employeeId, else create new employee
-    const employees = data.readEmployeesSync();
+    // REPLACE STRATEGY: Build a fresh employees array solely from the uploaded file
     let changedCount = 0;
-    const byId = new Map<number, any>();
-    employees.forEach(e => byId.set(e.id, e));
+    const employees: any[] = [];
 
     // Expect employeeId, firstName, lastName, department, title as leading columns if present
     // Attempt to detect if these columns exist in headers
@@ -89,50 +88,45 @@ export async function POST(req: Request) {
     let createdCount = 0;
     for (const [key, rows] of groupedByName.entries()) {
       const [ln, fn] = key.split('|');
-      let match = employees.find(e => (e.lastName || '').toLowerCase() === ln && (e.firstName || '').toLowerCase() === fn);
-      if (match) {
-        match.rawRows = rows;
-        changedCount++;
-      } else {
-        // Create a new employee record from the first row's fields
-        const sample = rows[0] || {};
-        const dep = sample['Department'] ?? null;
-        const title = sample['Employee Title'] ?? null;
-        // Attempt to infer current visa from the most recent row (Expiration Date / Case type)
-        let currentVisa: any = null;
-        try {
-          // choose the row with latest Expiration Date
-          const sorted = [...rows].sort((a,b) => {
-            const da = new Date(String(a['Expiration Date']||'')).getTime();
-            const db = new Date(String(b['Expiration Date']||'')).getTime();
-            return (isNaN(db)?0:db) - (isNaN(da)?0:da);
-          });
-          const vr = sorted[0] || sample;
-          currentVisa = {
-            type: vr['Case type'] ?? undefined,
-            startDate: vr['Start date'] ?? undefined,
-            endDate: vr['Expiration Date'] ?? undefined,
-          };
-        } catch {}
-        const newEmp = {
-          id: Date.now() + Math.floor(Math.random()*1000),
-          firstName: fn.charAt(0).toUpperCase()+fn.slice(1),
-          lastName: ln.charAt(0).toUpperCase()+ln.slice(1),
-          department: typeof dep === 'string' ? dep : undefined,
-          title: typeof title === 'string' ? title : undefined,
-          currentVisa,
-          rawRows: rows,
+      // Create a new employee record from the first row's fields
+      const sample = rows[0] || {};
+      const dep = sample['Department'] ?? null;
+      const title = sample['Employee Title'] ?? null;
+      // Attempt to infer current visa from the most recent row (Expiration Date / Case type)
+      let currentVisa: any = null;
+      try {
+        // choose the row with latest Expiration Date
+        const sorted = [...rows].sort((a,b) => {
+          const da = new Date(String(a['Expiration Date']||'')).getTime();
+          const db = new Date(String(b['Expiration Date']||'')).getTime();
+          return (isNaN(db)?0:db) - (isNaN(da)?0:da);
+        });
+        const vr = sorted[0] || sample;
+        currentVisa = {
+          type: vr['Case type'] ?? undefined,
+          startDate: vr['Start date'] ?? undefined,
+          endDate: vr['Expiration Date'] ?? undefined,
         };
-        employees.push(newEmp as any);
-        createdCount++;
-      }
+      } catch {}
+      const newEmp = {
+        id: Date.now() + Math.floor(Math.random()*1000),
+        firstName: fn.charAt(0).toUpperCase()+fn.slice(1),
+        lastName: ln.charAt(0).toUpperCase()+ln.slice(1),
+        department: typeof dep === 'string' ? dep : undefined,
+        title: typeof title === 'string' ? title : undefined,
+        currentVisa,
+        rawRows: rows,
+      };
+      employees.push(newEmp as any);
+      createdCount++;
     }
 
+    // Replace all employees with the newly built set
     data.writeEmployeesSync(employees);
     data.appendAudit({ type: 'IMPORT', changes: [
       { key: 'rowsReplaced', before: null, after: changedCount },
       { key: 'employeesCreated', before: null, after: createdCount }
-    ], note: `Imported file ${file.name}`, actor: undefined });
+    ], note: `Imported file ${file.name}`, actor: actor ? String(actor) : undefined });
 
     return NextResponse.json({ success: true, employeesUpdated: changedCount, employeesCreated: createdCount, headersOk, headersDetected });
   } catch (err) {

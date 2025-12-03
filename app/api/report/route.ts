@@ -13,6 +13,19 @@ function firstNonEmpty(rows: any[], keys: string[]): string | null {
   return null;
 }
 
+function lastNonEmpty(rows: any[], keys: string[]): string | null {
+  for (let i = rows.length - 1; i >= 0; i--) {
+    const r = rows[i];
+    for (const k of keys) {
+      const v = r[k];
+      if (v !== null && v !== undefined && String(v).trim() !== '' && String(v) !== '—') {
+        return String(v).trim();
+      }
+    }
+  }
+  return null;
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const type = searchParams.get('type') || 'visa-expirations';
@@ -69,10 +82,38 @@ export async function GET(req: NextRequest) {
   }
 
   function extractorForType(t:string){
-    if (t==='gender-breakdown') return (e:any)=> firstNonEmpty(e.rawRows||[], ['gender']);
-    if (t==='department-breakdown') return (e:any)=> e.department || firstNonEmpty(e.rawRows||[], ['department']);
-    if (t==='education-field-breakdown') return (e:any)=> firstNonEmpty(e.rawRows||[], ['employee educational field']);
-    if (t==='country-breakdown') return (e:any)=> firstNonEmpty(e.rawRows||[], ['country of birth']);
+    // NOTE: keys in rawRows are Title Case in the JSON (e.g., "Country of Birth", "Employee Educational Field").
+    // Prefer explicit Title Case keys; fall back to lowercase variants if needed.
+    if (t==='gender-breakdown') return (e:any)=> firstNonEmpty(e.rawRows||[], ['Gender','gender']);
+    if (t==='department-breakdown') return (e:any)=> e.department || firstNonEmpty(e.rawRows||[], ['Department','department']);
+    if (t==='education-field-breakdown') return (e:any)=> firstNonEmpty(e.rawRows||[], ['Employee Educational Field','employee educational field']);
+    if (t==='country-breakdown') return (e:any)=> firstNonEmpty(e.rawRows||[], ['Country of Birth','country of birth']);
+    if (t==='visa-journey-breakdown') {
+      return (e:any)=> {
+        // Determine most recent Case type from the LAST non-empty raw row
+        const ct = lastNonEmpty(e.rawRows||[], ['Case type','case type']);
+        if (!ct) return null;
+        const s = ct.toLowerCase();
+        if (s.includes('h-1b')) {
+          if (s.includes('initial')) return 'H-1B Initial';
+          if (s.includes('extension') && s.includes('ac 21')) return 'H-1B Extension (AC21)';
+          if (s.includes('extension')) return 'H-1B Extension';
+          if (s.includes('port')) return 'H-1B Port';
+          if (s.includes('transfer')) return 'H-1B Port';
+          if (s.includes('amendment')) return 'H-1B Amendment';
+          if (s.includes('cos')) return 'H-1B COS';
+          return 'H-1B Other';
+        }
+        if (s.startsWith('j-1')) return 'J-1';
+        if (s.includes('f-1')) return 'F-1/OPT';
+        if (s.startsWith('o-1') || s.includes('o-1')) return 'O-1';
+        if (s.includes('tn')) return 'TN';
+        if (s.includes('permanent residency') || s.startsWith('permanent') || s.includes('permanent resident')) return 'Permanent Residency';
+        if (s.includes('i-140')) return 'I-140';
+        if (s.includes('aos') || s.includes('adjust') || s.includes('i-485') || s.includes('i485')) return 'AOS';
+        return ct; // fallback to raw case type
+      };
+    }
     return (_:any)=> null;
   }
 
@@ -81,15 +122,16 @@ export async function GET(req: NextRequest) {
     const employeesMatched = employees.filter(e => extract(e) === categoryFilter).map(e => ({
       id: e.id,
       name: [e.firstName, e.lastName].filter(Boolean).join(' '),
-      department: e.department || firstNonEmpty(e.rawRows||[], ['department']) || '',
+      department: e.department || firstNonEmpty(e.rawRows||[], ['Department','department']) || '',
       visa: e.currentVisa?.type || '',
     }));
     return NextResponse.json({ type, category: categoryFilter, employees: employeesMatched });
   }
 
-  if (type === 'gender-breakdown' || type === 'department-breakdown' || type === 'education-field-breakdown' || type === 'country-breakdown') {
+  if (type === 'gender-breakdown' || type === 'department-breakdown' || type === 'education-field-breakdown' || type === 'country-breakdown' || type === 'visa-journey-breakdown') {
     const extract = extractorForType(type);
-    return NextResponse.json({ type, rows: breakdown(extract) });
+    const rows = breakdown(extract);
+    return NextResponse.json({ type, total: employees.length, rows });
   }
 
   return NextResponse.json({ type: 'unknown', rows: [] }, { status: 400 });
