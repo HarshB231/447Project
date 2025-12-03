@@ -67,7 +67,9 @@ export default function DashboardPage() {
         const imp = (items as any[]).find(x => x.type === 'IMPORT' && typeof x.note === 'string');
         if (imp) {
           const m = /Imported file\s+(.+)/.exec(String(imp.note));
-          setCurrentDataFile(m ? m[1] : null);
+          setCurrentDataFile(m ? m[1] : '(unknown)');
+        } else {
+          setCurrentDataFile('empty');
         }
       })
       .catch(console.error);
@@ -149,9 +151,7 @@ export default function DashboardPage() {
         <div className="titlebar">
           <div className="title" style={{ fontSize: '1.75rem' }}>Amount of current cases</div>
           <div className="help highlight-counter" style={{ fontSize: '1.25rem', color: '#000', fontWeight: 600 }}>{stats ? `${stats.total} case(s)` : '—'}</div>
-          {currentDataFile && (
-            <div className="help" style={{ marginTop: 6, fontSize: '1rem' }}>Data source: {currentDataFile}</div>
-          )}
+          <div className="help" style={{ marginTop: 6, fontSize: '1rem' }}>Data source: {currentDataFile || 'empty'}</div>
         </div>
 
         <div className="table-wrap" style={{ padding: '0 8px 8px' }}>

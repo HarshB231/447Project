@@ -123,6 +123,8 @@ export async function POST(req: Request) {
 
     // Replace all employees with the newly built set
     data.writeEmployeesSync(employees);
+    // Mark that an import has occurred so the app displays data
+    try { (data as any).markImported?.(); } catch {}
     data.appendAudit({ type: 'IMPORT', changes: [
       { key: 'rowsReplaced', before: null, after: changedCount },
       { key: 'employeesCreated', before: null, after: createdCount }

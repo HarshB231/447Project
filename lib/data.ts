@@ -4,6 +4,7 @@ import path from 'path';
 const DATA_DIR = path.resolve(process.cwd(), 'data');
 const EMP_FILE = path.join(DATA_DIR, 'employees.json');
 const AUDIT_FILE = path.join(DATA_DIR, 'audit-log.json');
+const IMPORTED_FLAG = path.join(DATA_DIR, '.imported');
 
 export type AuditChange = { key: string; before: any; after: any; rowIndex?: number };
 export type AuditEntry = {
@@ -41,6 +42,8 @@ export function ensureDataDir() {
 
 export function readEmployeesSync(): Employee[] {
   try {
+    // If no import has been performed yet, treat dataset as empty
+    if (!fs.existsSync(IMPORTED_FLAG)) return [];
     if (!fs.existsSync(EMP_FILE)) return [];
     const txt = fs.readFileSync(EMP_FILE, { encoding: 'utf8' });
     return JSON.parse(txt) as Employee[];
@@ -57,6 +60,15 @@ export async function readEmployees(): Promise<Employee[]> {
 export function writeEmployeesSync(items: Employee[]) {
   ensureDataDir();
   fs.writeFileSync(EMP_FILE, JSON.stringify(items, null, 2), { encoding: 'utf8' });
+}
+
+export function markImported() {
+  ensureDataDir();
+  try { fs.writeFileSync(IMPORTED_FLAG, '1', 'utf8'); } catch {}
+}
+
+export function clearImportedFlag() {
+  try { if (fs.existsSync(IMPORTED_FLAG)) fs.rmSync(IMPORTED_FLAG); } catch {}
 }
 
 export function readAuditLogSync(): AuditEntry[] {
@@ -119,4 +131,6 @@ export default {
   computeStats,
   readAuditLogSync,
   appendAudit,
+  markImported,
+  clearImportedFlag,
 };
