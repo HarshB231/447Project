@@ -68,7 +68,7 @@ body {
 }
 
 /* Wider container option for data-heavy views */
-.container-wide { max-width: 1400px; }
+.container-wide { max-width: 1650px; }
 
 .h1 {
   font-size: 32px;
@@ -96,18 +96,18 @@ body {
 }
 .kpi .label {
   color: var(--ink);
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 700;
   letter-spacing: 0.3px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .kpi .value {
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 42px;
+  font-weight: 800;
 }
 
-.large-kpi { padding: 22px; border-radius: 14px; }
-.large-kpi .value { font-size: 34px; }
+.large-kpi { padding: 28px; border-radius: 16px; }
+.large-kpi .value { font-size: 48px; }
 
 /* KPI card color variations */
 .kpis .kpi:nth-child(1) {
@@ -144,9 +144,11 @@ body {
 .table-wrap {
   max-height: 520px;
   overflow-y: auto;
-  border-top: 1px solid var(--line);
+  /* Remove top border to avoid visual gap under sticky header */
+  border-top: none;
   border-bottom: 1px solid var(--line);
   position: relative;
+  padding-top: 0;
 }
 .table-wrap .table { margin-bottom: 0; }
 
@@ -204,11 +206,18 @@ body {
 .table th { color: var(--ink); font-weight: 700; font-size:16px; letter-spacing:0.25px; }
 .table thead th {
   position: sticky;
-  top: 0;
+  top: 0; /* ensure header sits flush to the container */
   background: var(--card);
   z-index: 2;
 }
 .table tr:hover { background: #f9fafb; }
+
+/* Overrides to improve layout and remove sticky header gap */
+.section .titlebar { padding: 8px 4px 8px; }
+.table-wrap { margin-top: 0; }
+
+/* Allow wrapping in employees table to avoid horizontal scroll */
+.table.employees-table td { white-space: normal; }
 
 /* Detail modal-like view */
 .detail-middle { max-height: 520px; overflow: auto; padding: 12px; }

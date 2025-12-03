@@ -90,16 +90,16 @@ export default function Page() {
   }, [employees, q, searchType]);
 
   return (
-    <div className="container container-wide">
-      <h1 className="h1">Employees & Scholars</h1>
+    <div className="container container-wide" style={{ fontSize: '1.5rem', paddingBottom: 32 }}>
+      <h1 className="h1" style={{ fontSize: '3rem', marginBottom: 20 }}>Employees & Scholars</h1>
 
       {/* Search row: make Search a soft, popping button */}
-      <div style={{ display: "flex", gap: 16, marginBottom: 16 }}>
+      <div style={{ display: "flex", gap: 24, marginBottom: 24 }}>
         <select
           value={searchType}
           onChange={(e)=> setSearchType(e.target.value as any)}
           className="input big-search-input"
-          style={{ width: 180 }}
+          style={{ width: 220, fontSize:'1.25rem', padding: '12px 14px' }}
         >
           <option value="name">Name</option>
           <option value="visa">Visa</option>
@@ -110,47 +110,48 @@ export default function Page() {
           placeholder={`Search ${searchType}...`}
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          style={{ flex: 1 }}
+          style={{ flex: 1, fontSize:'1.25rem', padding: '14px 16px' }}
         />
-        <button className="btn-soft big-search-btn" onClick={load}>Refresh</button>
+        <button className="btn-soft big-search-btn" onClick={load} style={{ fontSize:'1.25rem', padding: '12px 18px' }}>Refresh</button>
       </div>
 
       {/* Table section */}
-      <div className="card section">
+      <div className="card section" style={{ padding: 24 }}>
         <div className="titlebar">
-          <div className="title">Employees & Scholars</div>
-          <div className="help highlight-counter">{filteredEmployees.length} shown</div>
+          <div className="title" style={{ fontSize:'1.75rem' }}>Employees & Scholars</div>
+          <div className="help highlight-counter" style={{ fontSize:'1.25rem', color:'#000', fontWeight:600 }}>{filteredEmployees.length} shown</div>
         </div>
 
-        <div style={{ overflowX: 'auto' }}>
-          <table className="table">
+        <div style={{ overflowX: 'auto', padding:8 }}>
+          <table className="table employees-table" style={{ width: '100%' }}>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Visa</th>
-                <th>Department</th>
-                <th>Title</th>
-                <th>Flagged</th>
-                <th>Actions</th>
+                <th style={{ fontSize:'1.25rem' }}>Name</th>
+                <th style={{ fontSize:'1.25rem' }}>Visa</th>
+                <th style={{ fontSize:'1.25rem' }}>Department</th>
+                <th style={{ fontSize:'1.25rem' }}>Title</th>
+                <th style={{ fontSize:'1.25rem' }}>Flagged</th>
+                <th style={{ fontSize:'1.25rem' }}>Actions</th>
               </tr>
             </thead>
             <tbody>
               {filteredEmployees.map((e) => (
                 <tr key={e.id}>
-                  <td>{[e.firstName, e.lastName].filter(Boolean).join(' ') || e.umbcEmail}</td>
-                  <td>{(e as any).currentVisa?.type ? <span className="chip">{(e as any).currentVisa.type}</span> : (e.visas && e.visas[0]?.type ? <span className="chip">{e.visas[0].type}</span> : '—')}</td>
-                  <td>{e.department}</td>
-                  <td>{e.title}</td>
-                  <td>{e.flagged ? <span className="flag-chip yes">Yes</span> : <span className="flag-chip no">No</span>}</td>
+                  <td style={{ fontSize:'1.25rem' }}>{[e.firstName, e.lastName].filter(Boolean).join(' ') || e.umbcEmail}</td>
+                  <td style={{ fontSize:'1.25rem' }}>{(e as any).currentVisa?.type ? <span className="chip" style={{ fontSize:'1.05rem' }}>{(e as any).currentVisa.type}</span> : (e.visas && e.visas[0]?.type ? <span className="chip" style={{ fontSize:'1.05rem' }}>{e.visas[0].type}</span> : '—')}</td>
+                  <td style={{ fontSize:'1.25rem' }}>{e.department}</td>
+                  <td style={{ fontSize:'1.25rem' }}>{e.title}</td>
+                  <td style={{ fontSize:'1.25rem' }}>{e.flagged ? <span className="flag-chip yes">Yes</span> : <span className="flag-chip no">No</span>}</td>
                   <td style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                     <button
                       className={`btn ${e.flagged ? 'btn-unflag' : 'btn-flag'}`}
                       onClick={() => toggleFlag(e.id, !!e.flagged)}
                       disabled={processing.includes(e.id)}
+                      style={{ fontSize:'1.15rem', padding: '10px 14px' }}
                     >
                       {e.flagged ? 'UNFLAG' : 'FLAG'}
                     </button>
-                    <Link className="btn-soft" href={`/employees/${e.id}`}>View</Link>
+                    <Link className="btn-soft" href={`/employees/${e.id}`} style={{ fontSize:'1.15rem', padding: '10px 14px' }}>View</Link>
                   </td>
                 </tr>
               ))}
